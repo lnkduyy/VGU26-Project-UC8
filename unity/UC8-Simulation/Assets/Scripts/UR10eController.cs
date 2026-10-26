@@ -50,9 +50,19 @@ public class UR10eController : MonoBehaviour
     private bool isInitialized = false;
     private bool hasReceivedFirstMsg = false;
 
+    [Header("Waypoint Visual Markers (Toggle Key [M])")]
+    [Tooltip("Hiển thị các quả cầu định vị ảo (Tắt/Bật bằng phím [M])")]
+    [SerializeField] private bool showWaypointMarkers = true;
+    [SerializeField] private float markerScale = 0.045f;
+    [SerializeField] private Vector3 markerIdlePos = new Vector3(0f, 0.42f, -0.60f);
+    [SerializeField] private Vector3 markerPickPos = new Vector3(0f, 0.16f, -0.60f);
+    [SerializeField] private Vector3 markerRedBinPos = new Vector3(-0.55f, 0.25f, -0.10f);
+    [SerializeField] private Vector3 markerYellowBinPos = new Vector3(0.55f, 0.25f, -0.10f);
+    [SerializeField] private Vector3 markerBlueBinPos = new Vector3(0f, 0.25f, 0.50f);
+
     // Góc chờ công nghiệp tối ưu cho Phương án 1:
-    // Cánh tay co cao thanh thoát, cổ tay luôn chĩa thẳng đứng 90 độ xuống mặt băng chuyền ngay tại đỉnh trạm gắp
-    private readonly float[] defaultStandbyAnglesDegrees = { 16.9f, -84.6f, -121.9f, -63.2f, 90.0f, 30.3f };
+    // Cánh tay co cao thanh thoát, cổ tay chúc 90 độ, ngón kẹp song song tuyệt đối với thành hộp (16.9 độ triệt tiêu góc xoay đế 16.9 độ)
+    private readonly float[] defaultStandbyAnglesDegrees = { 16.9f, -84.6f, -121.9f, -63.2f, 90.0f, 16.9f };
 
     private void Awake()
     {
@@ -418,11 +428,13 @@ public class UR10eController : MonoBehaviour
             parentObj = new GameObject("Waypoint_Visual_Markers");
         }
 
-        CreateOrUpdateMarker(parentObj.transform, "Marker_IDLE / READY", new Vector3(0f, 0.42f, -0.60f), new Color(0.2f, 0.95f, 0.3f));
-        CreateOrUpdateMarker(parentObj.transform, "Marker_PICK ZONE",    new Vector3(0f, 0.18f, -0.60f), new Color(0.1f, 0.85f, 0.95f));
-        CreateOrUpdateMarker(parentObj.transform, "Marker_RED BIN",      new Vector3(-0.55f, 0.35f, -0.10f), new Color(0.95f, 0.2f, 0.2f));
-        CreateOrUpdateMarker(parentObj.transform, "Marker_YELLOW BIN",   new Vector3(0.55f, 0.35f, -0.10f), new Color(0.98f, 0.88f, 0.15f));
-        CreateOrUpdateMarker(parentObj.transform, "Marker_BLUE BIN",     new Vector3(0f, 0.35f, 0.50f), new Color(0.2f, 0.5f, 1.0f));
+        CreateOrUpdateMarker(parentObj.transform, "Marker_IDLE / READY", markerIdlePos, new Color(0.2f, 0.95f, 0.3f));
+        CreateOrUpdateMarker(parentObj.transform, "Marker_PICK ZONE",    markerPickPos, new Color(0.1f, 0.85f, 0.95f));
+        CreateOrUpdateMarker(parentObj.transform, "Marker_RED BIN",      markerRedBinPos, new Color(0.95f, 0.2f, 0.2f));
+        CreateOrUpdateMarker(parentObj.transform, "Marker_YELLOW BIN",   markerYellowBinPos, new Color(0.98f, 0.88f, 0.15f));
+        CreateOrUpdateMarker(parentObj.transform, "Marker_BLUE BIN",     markerBlueBinPos, new Color(0.2f, 0.5f, 1.0f));
+
+        parentObj.SetActive(showWaypointMarkers);
     }
 
     private void CreateOrUpdateMarker(Transform parent, string name, Vector3 pos, Color color)
@@ -435,7 +447,7 @@ public class UR10eController : MonoBehaviour
             markerObj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             markerObj.name = name;
             markerObj.transform.SetParent(parent, false);
-            markerObj.transform.localScale = Vector3.one * 0.06f; // Đường kính 6cm nhỏ gọn
+            markerObj.transform.localScale = Vector3.one * markerScale;
 
             // Tắt Collider để tuyệt đối không cản trở chuyển động vật lý
             Collider col = markerObj.GetComponent<Collider>();
@@ -449,6 +461,7 @@ public class UR10eController : MonoBehaviour
             if (mr != null) mr.material = mat;
         }
 
+        markerObj.transform.localScale = Vector3.one * markerScale;
         markerObj.transform.position = pos;
     }
 
@@ -562,6 +575,26 @@ public class UR10eController : MonoBehaviour
             Debug.Log($"[UR10eController] Received /joint_states stream from ROS! Joint shoulder_pan: {targetAnglesDegrees[0]:F1} deg");
             hasReceivedFirstMsg = true;
         }
+    }
+
+    private void Update()
+    {
+        // Phím tắt [M]: Bật / Tắt hiển thị các chấm định vị ảo (Waypoint Visual Markers)
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            ToggleWaypointMarkers();
+        }
+    }
+
+    public void ToggleWaypointMarkers()
+    {
+        showWaypointMarkers = !showWaypointMarkers;
+        GameObject parentObj = GameObject.Find("Waypoint_Visual_Markers");
+        if (parentObj != null)
+        {
+            parentObj.SetActive(showWaypointMarkers);
+        }
+        Debug.Log($"[UR10eController] Waypoint Visual Markers: {(showWaypointMarkers ? "VISIBLE" : "HIDDEN")}");
     }
 
     private void FixedUpdate()

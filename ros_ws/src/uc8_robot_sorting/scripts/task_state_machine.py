@@ -77,8 +77,9 @@ class TaskStateMachine:
         # Optimal STANDBY joint pose (Wrist points strictly 90 degrees downward):
         # Shoulder and elbow elevated, avoiding table and conveyor collisions
         # tool0 points vertically downward onto pick zone (X = -0.60m, Z = 0.42m)
-        self.standby_joints = [0.2945, -1.4760, -2.1278, -1.1022, 1.5708, 0.5291]
-        self.q_standby = [-0.7850, -0.6195, 0.0030, 0.0012] # [x, y, z, w] base quaternion
+        # Joint 5 (wrist_3_joint = 0.2945 rad) exactly cancels Joint 0 yaw, keeping jaws 100% parallel to cube faces!
+        self.standby_joints = [0.2945, -1.4760, -2.1278, -1.1022, 1.5708, 0.2945]
+        self.q_standby = [-0.7071068, -0.7071068, 0.0031, 0.0008] # [x, y, z, w] base quaternion (Yaw = 90.0 deg)
 
         # Orientation strictly orthogonal to conveyor and cubes (Z down, X along conveyor, Y across):
         self.down_orientation = Quaternion(x=0.7071068, y=0.7071068, z=0.0, w=0.0)
@@ -113,9 +114,9 @@ class TaskStateMachine:
         # Optimal non-singular joint configurations for the 3 sorting bins:
         # Arm profile remains constant, ONLY shoulder_pan_joint rotates like a crane
         self.bin_joints = {
-            "Red":    [-1.0741, -1.4731, -2.2727, -0.9602, 1.5708, 0.5291], # X = -0.10m, Y = +0.55m
-            "Yellow": [ 1.7077, -1.4731, -2.2727, -0.9602, 1.5708, 0.5291], # X = -0.10m, Y = -0.55m
-            "Blue":   [-2.7858, -1.3576, -2.3651, -0.9833, 1.5708, 0.5291]  # X = +0.50m, Y =  0.00m
+            "Red":    [-1.0741, -1.4731, -2.2727, -0.9602, 1.5708, 0.2945], # X = -0.10m, Y = +0.55m
+            "Yellow": [ 1.7077, -1.4731, -2.2727, -0.9602, 1.5708, 0.2945], # X = -0.10m, Y = -0.55m
+            "Blue":   [-2.7858, -1.3576, -2.3651, -0.9833, 1.5708, 0.2945]  # X = +0.50m, Y =  0.00m
         }
 
         # Experiment logging
