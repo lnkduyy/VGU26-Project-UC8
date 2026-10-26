@@ -109,6 +109,10 @@ class VisionDetectorNode:
             # Debug annotation frame
             debug_frame = img_bgr.copy()
 
+            # Top HUD banner
+            cv2.rectangle(debug_frame, (0, 0), (w, 28), (20, 20, 20), -1)
+            cv2.putText(debug_frame, "UC8 CV: FRONT-TILTED OPPOSITE MOUNT (ZERO ARM OCCLUSION)", (12, 19), cv2.FONT_HERSHEY_SIMPLEX, 0.44, (0, 255, 255), 1)
+
             # Draw pick target zone on debug frame
             center_px = int(self.camera_center_u)
             center_py = int(self.camera_center_v)

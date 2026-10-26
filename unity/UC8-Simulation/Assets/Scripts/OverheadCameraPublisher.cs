@@ -30,12 +30,15 @@ public class OverheadCameraPublisher : MonoBehaviour
     [Range(30, 95)]
     [SerializeField] private int jpegQuality = 80;
 
-    [Header("Mount Transform (Overhead Pick Station)")]
-    [Tooltip("Camera position directly above the conveyor pick station (Z=-0.60m in Unity world)")]
-    [SerializeField] private Vector3 mountPosition = new Vector3(0.0f, 1.25f, -0.60f);
-    [Tooltip("Looking straight down onto the conveyor")]
-    [SerializeField] private Vector3 mountEulerAngles = new Vector3(90.0f, 0.0f, 0.0f);
-    [SerializeField] private float fieldOfView = 45f;
+    [Header("Mount Transform (Option 1: Opposite Front-Tilted Mount)")]
+    [Tooltip("Camera positioned opposite to the robot across the conveyor (Z=-1.10m), tilted towards pick station")]
+    [SerializeField] private Vector3 mountPosition = new Vector3(0.0f, 0.75f, -1.10f);
+    [Tooltip("Tilted downward towards the conveyor pick station (Z=-0.60m)")]
+    [SerializeField] private Vector3 mountEulerAngles = new Vector3(50.0f, 0.0f, 0.0f);
+    [SerializeField] private float fieldOfView = 48f;
+
+    [Header("3D Physical Camera Stand")]
+    [SerializeField] private bool renderPhysicalStand = true;
 
     [Header("GUI Preview Window")]
     [SerializeField] private bool showPreview = true;
@@ -85,7 +88,56 @@ public class OverheadCameraPublisher : MonoBehaviour
 
         texture2D = new Texture2D(imageWidth, imageHeight, TextureFormat.RGB24, false);
 
-        Debug.Log($"[OverheadCamera] Initialized Overhead Camera at {transform.position}, resolution {imageWidth}x{imageHeight} @ {publishRateHz}Hz");
+        // 3. Procedurally generate realistic 3D camera stand on opposite side of conveyor
+        if (renderPhysicalStand)
+        {
+            BuildPhysicalStand();
+        }
+
+        Debug.Log($"[OverheadCamera] Initialized Option 1 Front-Tilted Camera at {transform.position}, angle {mountEulerAngles}, resolution {imageWidth}x{imageHeight} @ {publishRateHz}Hz");
+    }
+
+    /// <summary>
+    /// Procedurally constructs a realistic industrial camera tripod/stand on the opposite side of the conveyor.
+    /// Provides physical realism in Unity scene while completely avoiding collision interference.
+    /// </summary>
+    private void BuildPhysicalStand()
+    {
+        if (transform.Find("CameraStand") != null) return;
+
+        GameObject standRoot = new GameObject("CameraStand");
+        standRoot.transform.SetParent(this.transform.parent, false);
+
+        Color metalColor = new Color(0.25f, 0.28f, 0.32f); // Dark industrial steel
+        Color headColor = new Color(0.12f, 0.12f, 0.14f);  // Black camera housing
+
+        Shader stdShader = Shader.Find("Standard") ?? Shader.Find("Diffuse");
+        Material metalMat = new Material(stdShader) { color = metalColor };
+        Material headMat = new Material(stdShader) { color = headColor };
+
+        // Base plate on floor
+        CreatePart(standRoot.transform, "BasePlate", new Vector3(0.0f, 0.02f, -1.10f), new Vector3(0.24f, 0.04f, 0.24f), metalMat);
+        // Vertical post
+        CreatePart(standRoot.transform, "VerticalPost", new Vector3(0.0f, 0.38f, -1.10f), new Vector3(0.04f, 0.72f, 0.04f), metalMat);
+        // Camera head housing
+        CreatePart(standRoot.transform, "CameraHead", new Vector3(0.0f, 0.74f, -1.10f), new Vector3(0.09f, 0.07f, 0.12f), headMat, Quaternion.Euler(50.0f, 0.0f, 0.0f));
+    }
+
+    private void CreatePart(Transform parent, string name, Vector3 pos, Vector3 scale, Material mat, Quaternion? rot = null)
+    {
+        GameObject part = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        part.name = name;
+        part.transform.SetParent(parent, false);
+        part.transform.position = pos;
+        part.transform.localScale = scale;
+        if (rot.HasValue) part.transform.rotation = rot.Value;
+
+        // Remove collider to prevent any physics or raycast conflicts
+        Collider col = part.GetComponent<Collider>();
+        if (col != null) Destroy(col);
+
+        Renderer rend = part.GetComponent<Renderer>();
+        if (rend != null) rend.material = mat;
     }
 
     private void Start()
@@ -181,7 +233,7 @@ public class OverheadCameraPublisher : MonoBehaviour
         Rect pipRect = new Rect(Screen.width - pipWidth - padding, Screen.height - pipHeight - padding, pipWidth, pipHeight);
 
         // Outer background box
-        GUI.Box(new Rect(pipRect.x - 2, pipRect.y - 20, pipWidth + 4, pipHeight + 22), "Overhead Camera View [V]");
+        GUI.Box(new Rect(pipRect.x - 2, pipRect.y - 20, pipWidth + 4, pipHeight + 22), "Front-Tilted Camera View [V]");
         GUI.DrawTexture(pipRect, renderTexture, ScaleMode.ScaleToFit, false);
     }
 
