@@ -90,9 +90,10 @@ echo -e "${CYAN}[2/4] Khởi động chế độ All-in-One (Một Terminal duy 
 cleanup() {
     echo ""
     echo -e "\n${YELLOW}[!] Đang dừng sạch sẽ toàn bộ các tiến trình nền...${NC}"
-    kill -9 $PID_ENDPOINT $PID_MOVEIT 2>/dev/null
+    kill -9 $PID_ENDPOINT $PID_MOVEIT $PID_VISION 2>/dev/null
     kill -9 $(lsof -t -i:10000) 2>/dev/null
     pkill -9 -f "task_state_machine.py" 2>/dev/null
+    pkill -9 -f "vision_detector_node.py" 2>/dev/null
     pkill -9 -f "ur10e_moveit_config" 2>/dev/null
     pkill -9 -f "ros_tcp_endpoint" 2>/dev/null
     echo -e "${GREEN}[✔] Đã dừng toàn bộ hệ thống an toàn.${NC}"
@@ -101,7 +102,7 @@ cleanup() {
 trap cleanup SIGINT SIGTERM EXIT
 
 # 1. Chạy ROS-TCP-Endpoint trong nền
-echo -e "${YELLOW} --> [1/3] Khởi động ROS-TCP-Endpoint trên cổng 10000...${NC}"
+echo -e "${YELLOW} --> [1/4] Khởi động ROS-TCP-Endpoint trên cổng 10000...${NC}"
 roslaunch ros_tcp_endpoint endpoint.launch > "$LOGS_DIR/endpoint.log" 2>&1 &
 PID_ENDPOINT=$!
 sleep 2
@@ -114,7 +115,7 @@ else
 fi
 
 # 2. Chạy MoveIt & RViz trong nền (Cửa sổ 3D RViz vẫn sẽ tự động hiện lên màn hình)
-echo -e "${YELLOW} --> [2/3] Khởi động MoveIt Motion Planning & RViz...${NC}"
+echo -e "${YELLOW} --> [2/4] Khởi động MoveIt Motion Planning & RViz...${NC}"
 roslaunch ur10e_moveit_config demo.launch > "$LOGS_DIR/moveit.log" 2>&1 &
 PID_MOVEIT=$!
 
@@ -127,12 +128,20 @@ for i in {1..12}; do
     sleep 1
 done
 
-# 3. Chạy Task State Machine ở tiền cảnh (Foreground) để người dùng theo dõi trực tiếp
+# 3. Chạy OpenCV Computer Vision Detector Node trong nền (Requirement R6 & R7)
+echo -e "${YELLOW} --> [3/4] Khởi động OpenCV Computer Vision Node (/camera/color/image_raw)...${NC}"
+python3 "$ROS_WS/src/uc8_robot_sorting/scripts/vision_detector_node.py" > "$LOGS_DIR/vision.log" 2>&1 &
+PID_VISION=$!
+sleep 1
+echo -e "${GREEN}      [✔] OpenCV Computer Vision Detector đã kích hoạt! (PID: $PID_VISION)${NC}"
+
+# 4. Chạy Task State Machine ở tiền cảnh (Foreground) để người dùng theo dõi trực tiếp
 echo ""
 echo -e "${GREEN}${BOLD}=========================================================================="
-echo "    [3/3] KHỞI ĐỘNG TASK STATE MACHINE (PICK-AND-PLACE SEQUENCE)          "
+echo "    [4/4] KHỞI ĐỘNG TASK STATE MACHINE (PICK-AND-PLACE SEQUENCE)          "
 echo "==========================================================================${NC}"
 echo -e " * Cửa sổ RViz 3D đã mở trên màn hình."
+echo -e " * Camera thị giác máy tính OpenCV đã sẵn sàng nhận ảnh từ Unity."
 echo -e " * Mở ${GREEN}${BOLD}Unity Editor${NC} và nhấn nút ${GREEN}${BOLD}Play (▶)${NC} để bắt đầu mô phỏng!"
 echo -e " * Để dừng toàn bộ hệ thống bất cứ lúc nào, nhấn ${YELLOW}${BOLD}Ctrl + C${NC}."
 echo -e "${CYAN}--------------------------------------------------------------------------${NC}"
