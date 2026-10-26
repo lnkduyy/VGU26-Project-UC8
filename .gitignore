@@ -64,4 +64,5 @@ Thumbs.db
 *.log
 *.tmp
 *.zip
+.~lock.*
 docs/week04/pylib/

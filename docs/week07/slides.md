@@ -26,7 +26,7 @@
 | **08** | **Front-Tilted Vision Cell Architecture (R6/R7)** | Camera at $X=0, Y=0.75\,\text{m}, Z=-1.10\,\text{m}$ (tilt $50^\circ$), 3D tripod stand, OpenCV HUD |
 | **09** | **Decoupled Perception Architecture** | Transparent drop-in replacement; ROS TCP streaming at 15 Hz; real-time HSV segmentation |
 | **10** | **Empirical Benchmarks (25-Trial Run)** | Real continuous run: 100% grasp/place success, 0 collisions, cycle times $13.36\,\text{s}$ / $13.62\,\text{s}$ |
-| **11** | **Plan for Next Week (Week 08)** | Milestone 3 Sprint: Dynamic moving barrier, real-time risk monitor, safe-stop & replan |
+| **11** | **Plan for Next Week (Week 08)** | Week 08 sprint goals & roadmap towards Milestone 2 formal defense (Week 10) |
 | **12** | **Summary & Faculty Q&A** | Project status sign-off, engineering conclusions, and committee discussion |
 
 ---
@@ -50,7 +50,7 @@
 7. **OpenCV Multi-Color Segmentation & Tracking:** HSV filtering, sub-pixel centroid moments ($\approx 1.52\,\text{mm/px}$), and real-time HUD.
 8. **Empirical Benchmarks & 25-Trial Continuous Test:** Statistical QA across 25 consecutive trials ($13.36\,\text{s}$ Yellow, $13.62\,\text{s}$ Red, $100\%$ success).
 9. **Interactive Presentation Controls:** Hotkey camera presets `[1]-[3]`, PiP inspection `[V]`, and virtual markers `[M]`.
-10. **Plan for Next Week (Week 08) & Milestone 3 Roadmap:** Real-time dynamic moving obstacle avoidance and risk monitor.
+10. **Plan for Next Week (Week 08) & Roadmap to Milestone 2 (Week 10):** Hardening perception, static obstacle validation, and defense readiness.
 
 ---
 
@@ -229,16 +229,18 @@
 
 ---
 
-## SLIDE 11: PLAN FOR NEXT WEEK (WEEK 08) & MILESTONE 3 ROADMAP
-### 1. Milestone 2 Acceptance Sign-Off:
-- Milestone 2 deliverables (R5 Continuous Trajectory, R6/R7 OpenCV Perception, R8 Machine Guarding) 100% verified.
-- Complete video defense recording and final technical report package.
+## SLIDE 11: PLAN FOR NEXT WEEK (WEEK 08) & ROADMAP TO MILESTONE 2 (WEEK 10)
+### 1. Week 08 Technical Commitments:
+- **Perception Hardening & Lighting Invariance:** Calibrate OpenCV HSV segmentation under dynamic shadows and reflections; add morphological filtering for outlier rejection.
+- **Static Obstacle Verification:** Validate safety clearance margins over acrylic shields ($Z = -0.38\,\text{m}$) and UR Control Box across all 3 destination bins.
+- **Extended Continuous Flow Testing:** Perform a 50-trial endurance benchmark with varied conveyor speeds ($0.2 - 0.4\,\text{m/s}$) and random multi-color queues.
+- **Milestone 2 Defense Package:** Prepare automated launch scripts, 1-click test runners, and diagnostic logs ahead of the formal submission.
 
-### 2. Milestone 3 Sprint: Dynamic Obstacle Avoidance:
-- **Commitment 1 (Dynamic Moving Barrier):** Deploy oscillating physical barrier crossing robot transit paths in Unity and synchronize at 30 Hz into MoveIt PlanningScene.
-- **Commitment 2 (Real-Time Risk Monitoring):** Implement predictive collision monitoring evaluating distance to barrier within lookahead window $t < 0.5\,\text{s}$.
-- **Commitment 3 (Reactive Safe-Stop & Replan):** Trigger immediate trajectory deceleration upon risk detection, hold safe standby, and replan bypass path.
-- **Commitment 4 (Stress Testing):** Conduct $\ge 50$ dynamic trials testing barrier speeds from $0.1\,\text{m/s}$ to $0.5\,\text{m/s}$.
+### 2. Milestone Roadmap (Weeks 08 $\to$ 14):
+- **Week 08 (Next Week):** Perception hardening, static obstacle clearance validation, and 50-trial endurance testing.
+- **Week 09:** Complete Milestone 2 pre-defense package: Technical Runbook, documentation, and recorded verification video.
+- **Week 10 (Milestone 2 Formal Defense):** Official committee evaluation of Conveyor Sorting, Computer Vision Perception, and Static Obstacle Avoidance (Requirements R6–R8).
+- **Weeks 11–14 (Milestone 3 Sprint):** Dynamic Moving Obstacle Avoidance (oscillating physical barrier, real-time risk monitor, reactive safe-stop & replan).
 
 ---
 
@@ -246,11 +248,12 @@
 ### 1. Key Accomplishments Delivered in Week 07:
 - **Requirement R5 Verified:** Continuous Cartesian path blending eliminated all 10 stop pauses, cutting flanking cycle times to $13.2 - 13.6\,\text{s}$ ($-47\%$ boost).
 - **Gripper Parallelism Achieved:** Joint 5 realigned to $16.87^\circ$, eliminating the $13.4^\circ$ skew and achieving $100\%$ parallel alignment.
+- **Physical Grasp Stability:** Electro-mechanical braking ($X = 0.00\,\text{m}$) and self-centering grasp eliminated coasting drift and mid-air floating.
 - **Conveyor Grasp Collision Solved:** Rapid $+16\,\text{cm}$ vertical escape lift in $<0.25\,\text{s}$ at $2.4\text{x}$ cleared oncoming conveyor cubes cleanly.
 - **Requirements R6 & R7 Verified:** Front-Tilted Camera Mount deployed with 3D stand in Unity, delivering 0% arm occlusion and real-time OpenCV HUD.
-- **Interactive Controls:** Added `[M]` toggle for Waypoint Markers, `[V]` for Camera PiP, and `[T]` for Trajectory Trail.
+- **Interactive Presentation Controls:** Added camera presets `[1]-[3]`, `[M]` toggle for Markers, `[V]` for CV PiP, and `[C]` for Camera HUD.
 
 ### 2. Engineering Sign-Off:
 - System is 100% reproducible via `./run_workcell.sh` in Unity and ROS Noetic.
 - Real empirical dataset of 25 consecutive trials verified with 100% success rate.
-- Ready for Faculty Committee Q&A and Milestone 2 demonstration.
+- Ready for Faculty Committee Q&A and on track for Milestone 2 defense at Week 10.

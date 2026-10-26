@@ -451,23 +451,24 @@ def build_presentation(output_path):
     add_bullet(c10_bottom, "Cycle Time Stability:", "Flanking bins consistently finished in 13.0 - 14.0s (StdDev: 2.76s across all 25 trials).", color=COLOR_SUCCESS)
 
     # =========================================================================
-    # SLIDE 11: PLAN FOR NEXT WEEK & MILESTONE 3 ROADMAP
+    # SLIDE 11: PLAN FOR NEXT WEEK & ROADMAP TO MILESTONE 2 (WEEK 10)
     # =========================================================================
     s11 = prs.slides.add_slide(blank_layout)
-    add_header(s11, "Forward Roadmap", "Plan for Next Week (Week 08) & Milestone 3 Roadmap", "11/12")
+    add_header(s11, "Forward Roadmap", "Plan for Next Week (Week 08) & Roadmap to Milestone 2 (Week 10)", "11/12")
 
     c11_1 = create_card(s11, Inches(0.8), Inches(1.6), Inches(5.7), Inches(5.3),
-                        "Milestone 2 Acceptance Sign-Off", "Wrapping up static sorting and perception deliverables")
-    add_bullet(c11_1, "Deliverable 1:", "Milestone 2 acceptance review sign-off (Requirements R5, R6, R7, and R8 100% fulfilled).")
-    add_bullet(c11_1, "Deliverable 2:", "Compile finalized 25-trial continuous sorting video demonstrating multi-item flow.")
-    add_bullet(c11_1, "Deliverable 3:", "Package Week 07 technical defense documentation and code review artifacts.")
+                        "Week 08 Sprint Commitments", "Hardening perception, static obstacle clearance & endurance testing")
+    add_bullet(c11_1, "Perception Hardening:", "Calibrate OpenCV HSV thresholds under dynamic shadows and reflections; add morphological filtering for outlier rejection.")
+    add_bullet(c11_1, "Static Obstacle Clearance:", "Validate safety clearance margins over acrylic shields (Z = -0.38m) and UR Control Box across all 3 destination bins.")
+    add_bullet(c11_1, "Extended Flow Testing:", "Perform a 50-trial endurance benchmark with varied conveyor speeds (0.2 - 0.4 m/s) and random multi-color queues.")
+    add_bullet(c11_1, "Defense Preparation:", "Prepare automated launch scripts, 1-click test runners, and diagnostic logs ahead of Milestone 2 submission.", color=COLOR_SUCCESS)
 
     c11_2 = create_card(s11, Inches(6.8), Inches(1.6), Inches(5.7), Inches(5.3),
-                        "Milestone 3 Sprint: Dynamic Obstacle Avoidance", "Advancing into reactive collision avoidance (Weeks 08–10)")
-    add_bullet(c11_2, "Dynamic Moving Barrier:", "Deploy oscillating barrier crossing robot transit paths in Unity and synchronize at 30 Hz into MoveIt PlanningScene.")
-    add_bullet(c11_2, "Real-Time Risk Monitor:", "Implement predictive collision monitoring evaluating distance to barrier within lookahead window t < 0.5s.")
-    add_bullet(c11_2, "Reactive Safe-Stop & Replan:", "Trigger immediate trajectory deceleration upon risk detection, hold safe standby, and replan bypass path.")
-    add_bullet(c11_2, "Stress Testing Matrix:", "Conduct >= 50 dynamic trials testing barrier speeds from 0.1 m/s to 0.5 m/s.")
+                        "Course Roadmap (Weeks 08 -> 14)", "Milestone 2 formal defense & Milestone 3 dynamic avoidance")
+    add_bullet(c11_2, "Week 08 (Next Week):", "Perception hardening, static obstacle clearance validation, and 50-trial endurance testing.")
+    add_bullet(c11_2, "Week 09:", "Complete Milestone 2 pre-defense package: Technical Runbook, documentation, and recorded verification video.")
+    add_bullet(c11_2, "Week 10 (Milestone 2 Formal Defense):", "Official committee evaluation of Conveyor Sorting, Computer Vision Perception, and Static Obstacle Avoidance (R6-R8).", color=COLOR_PRIMARY)
+    add_bullet(c11_2, "Weeks 11-14 (Milestone 3 Sprint):", "Dynamic Moving Obstacle Avoidance (oscillating physical barrier, real-time risk monitor, reactive safe-stop & replan).")
 
     # =========================================================================
     # SLIDE 12: SUMMARY & FACULTY Q&A
@@ -479,15 +480,17 @@ def build_presentation(output_path):
                         "Technical Accomplishments Summary", "Deliverables verified in Week 07")
     add_bullet(c12_1, "Requirement R5 Verified:", "Continuous Cartesian blending cut flanking cycle times to 13.2 - 13.6s (-47% boost) and eliminated all 10 stop pauses.", color=COLOR_SUCCESS)
     add_bullet(c12_1, "Parallel Gripper Jaws:", "Joint 5 realigned to 16.87°, achieving 100% parallel contact with cube faces and conveyor sides.", color=COLOR_SUCCESS)
+    add_bullet(c12_1, "Physical Grasp Stability:", "Electro-mechanical braking (X=0.00m) and self-centering grasp eliminated coasting drift and mid-air floating.", color=COLOR_SUCCESS)
     add_bullet(c12_1, "Conveyor Clearance Secured:", "Rapid +16cm vertical escape lift in <0.25s at 2.4x cleared oncoming conveyor cubes cleanly.", color=COLOR_SUCCESS)
     add_bullet(c12_1, "Requirements R6 & R7 Verified:", "Front-Tilted Camera deployed with 3D stand in Unity, delivering 0% arm occlusion and real-time OpenCV HUD.", color=COLOR_SUCCESS)
-    add_bullet(c12_1, "Interactive UI Controls:", "Added key [M] for Waypoint Markers, [V] for Camera PiP, and [T] for Trajectory Trail.", color=COLOR_SUCCESS)
+    add_bullet(c12_1, "Interactive Presentation Controls:", "Calibrated 3 cinematic camera views [1]-[3], [M] toggle for Markers, [V] for CV PiP, and [C] for Camera HUD.", color=COLOR_SUCCESS)
 
     c12_2 = create_card(s12, Inches(6.8), Inches(1.6), Inches(5.7), Inches(5.3),
-                        "Engineering Sign-Off & Committee Q&A", "Ready for technical evaluation and defense")
+                        "Engineering Sign-Off & Committee Q&A", "Ready for technical evaluation and on track for Milestone 2")
     add_bullet(c12_2, "Reproducibility:", "Automated workcell launcher ./run_workcell.sh runs full stack in one command.")
     add_bullet(c12_2, "Version Control:", "All scripts, launch files, Unity assets, and QA logs committed to Git repository main branch.")
     add_bullet(c12_2, "Empirical Validation:", "Real dataset of 25 consecutive trials verified with 100% success rate.")
+    add_bullet(c12_2, "Milestone 2 Readiness:", "On track for formal Milestone 2 defense at Week 10.", color=COLOR_PRIMARY)
     add_bullet(c12_2, "Faculty Discussion:", "Open for technical questions, live simulation demonstration, and MoveIt/OpenCV review.")
 
     # Save presentation

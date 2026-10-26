@@ -459,23 +459,24 @@ def build_pdf(output_path):
     story.append(PageBreak())
 
     # =========================================================================
-    # SLIDE 11: PLAN FOR NEXT WEEK & MILESTONE 3 ROADMAP
+    # SLIDE 11: PLAN FOR NEXT WEEK & ROADMAP TO MILESTONE 2 (WEEK 10)
     # =========================================================================
-    story.append(make_header("Forward Roadmap", "Plan for Next Week (Week 08) & Milestone 3 Roadmap", 11))
+    story.append(make_header("Forward Roadmap", "Plan for Next Week (Week 08) & Roadmap to Milestone 2 (Week 10)", 11))
     story.append(Spacer(1, 10))
 
     c11_left = [
-        "<b>Deliverable 1:</b> Milestone 2 acceptance review sign-off (Requirements R5, R6, R7, and R8 100% fulfilled).",
-        "<b>Deliverable 2:</b> Compile finalized 25-trial continuous sorting video demonstrating multi-item flow.",
-        "<b>Deliverable 3:</b> Package Week 07 technical defense documentation and code review artifacts."
+        "<b>Perception Hardening:</b> Calibrate OpenCV HSV thresholds under dynamic shadows and reflections; add morphological filtering for outlier rejection.",
+        "<b>Static Obstacle Clearance:</b> Validate safety clearance margins over acrylic shields (Z = -0.38m) and UR Control Box across all 3 destination bins.",
+        "<b>Extended Flow Testing:</b> Perform a 50-trial endurance benchmark with varied conveyor speeds (0.2 - 0.4 m/s) and random multi-color queues.",
+        "<b>Defense Preparation:</b> Prepare automated launch scripts, 1-click test runners, and diagnostic logs ahead of Milestone 2 submission."
     ]
     c11_right = [
-        "<b>Dynamic Moving Barrier:</b> Deploy oscillating physical barrier crossing robot transit paths in Unity and synchronize at 30 Hz into MoveIt PlanningScene.",
-        "<b>Real-Time Risk Monitor:</b> Implement predictive collision monitoring evaluating distance to barrier within lookahead window t < 0.5s.",
-        "<b>Reactive Safe-Stop & Replan:</b> Trigger immediate trajectory deceleration upon risk detection, hold safe standby, and replan bypass path.",
-        "<b>Stress Testing Matrix:</b> Conduct >= 50 dynamic trials testing barrier speeds from 0.1 m/s to 0.5 m/s."
+        "<b>Week 08 (Next Week):</b> Perception hardening, static obstacle clearance validation, and 50-trial endurance testing.",
+        "<b>Week 09:</b> Complete Milestone 2 pre-defense package: Technical Runbook, documentation, and recorded verification video.",
+        "<b>Week 10 (Milestone 2 Formal Defense):</b> Official committee evaluation of Conveyor Sorting, Computer Vision Perception, and Static Obstacle Avoidance (R6-R8).",
+        "<b>Weeks 11-14 (Milestone 3 Sprint):</b> Dynamic Moving Obstacle Avoidance (oscillating physical barrier, real-time risk monitor, reactive safe-stop & replan)."
     ]
-    t11 = Table([[make_card("Milestone 2 Acceptance Sign-Off", c11_left, 376), make_card("Milestone 3 Sprint: Dynamic Obstacle Avoidance", c11_right, 376)]], colWidths=[388, 388])
+    t11 = Table([[make_card("Week 08 Sprint Commitments", c11_left, 376), make_card("Course Roadmap (Weeks 08 -> 14)", c11_right, 376)]], colWidths=[388, 388])
     t11.setStyle(TableStyle([('VALIGN', (0, 0), (-1, -1), 'TOP')]))
     story.append(t11)
     story.append(PageBreak())
@@ -489,14 +490,16 @@ def build_pdf(output_path):
     c12_left = [
         "<b>Requirement R5 Verified:</b> Continuous Cartesian blending cut flanking cycle times to 13.2 - 13.6s (-47% boost) and eliminated all 10 stop pauses.",
         "<b>Parallel Gripper Jaws:</b> Joint 5 realigned to 16.87°, achieving 100% parallel contact with cube faces and conveyor sides.",
+        "<b>Physical Grasp Stability:</b> Electro-mechanical braking (X=0.00m) and self-centering grasp eliminated coasting drift and mid-air floating.",
         "<b>Conveyor Clearance Secured:</b> Rapid +16cm vertical escape lift in <0.25s at 2.4x cleared oncoming conveyor cubes cleanly.",
         "<b>Requirements R6 & R7 Verified:</b> Front-Tilted Camera deployed with 3D stand in Unity, delivering 0% arm occlusion and real-time OpenCV HUD.",
-        "<b>Interactive UI Controls:</b> Added key [M] for Waypoint Markers, [V] for Camera PiP, and [T] for Trajectory Trail."
+        "<b>Interactive Presentation Controls:</b> Calibrated 3 cinematic camera views [1]-[3], [M] toggle for Markers, [V] for CV PiP, and [C] for Camera HUD."
     ]
     c12_right = [
         "<b>Reproducibility:</b> Automated workcell launcher ./run_workcell.sh runs full stack in one command.",
         "<b>Version Control:</b> All scripts, launch files, Unity assets, and QA logs committed to Git repository main branch.",
         "<b>Empirical Validation:</b> Real dataset of 25 consecutive trials verified with 100% success rate.",
+        "<b>Milestone 2 Readiness:</b> On track for formal Milestone 2 defense at Week 10.",
         "<b>Faculty Discussion:</b> Open for technical questions, live simulation demonstration, and MoveIt/OpenCV review."
     ]
     t12 = Table([[make_card("Technical Accomplishments Summary", c12_left, 376), make_card("Engineering Sign-Off & Committee Q&A", c12_right, 376)]], colWidths=[388, 388])
