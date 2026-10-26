@@ -51,15 +51,15 @@ public class WorkcellCameraController : MonoBehaviour
     {
         cam = GetComponent<Camera>();
 
-        // Thiết lập 3 góc máy điện ảnh:
-        // [1] Isometric: Toàn cảnh bao quát workcell
-        // [2] Blue Bin: Cận cảnh thùng xanh (Blue Bin) ở tọa độ Z = 0.5m
-        // [3] Close-Up: Cận cảnh trạm gắp phôi và cánh tay
+        // Thiết lập 3 góc máy điện ảnh chuẩn xác cho Option 1 (Front Pick - Flanking Bins):
+        // [1] Workcell Overview: Toàn cảnh bao quát 100% workcell từ góc trước-trái
+        // [2] Sorting & Obstacles: Bao quát 3 thùng phân loại và vòm né mica từ góc trước-phải
+        // [3] Gripper Close-Up: Cận cảnh đặc tả trạm gắp phôi và mỏ kẹp 2 ngón tại X=0, Z=-0.60m
         presets = new CameraPreset[]
         {
-            new CameraPreset("[1] Isometric", new Vector3(-1.20f, 1.70f, -2.20f), new Vector3(30f, 30f, 0f), 52f),
-            new CameraPreset("[2] Blue Bin",  new Vector3( 0.65f, 0.90f,  1.10f), new Vector3(35f, -135f, 0f), 46f),
-            new CameraPreset("[3] Close-Up",  new Vector3(-0.70f, 0.85f, -1.35f), new Vector3(22f, 35f, 0f), 45f)
+            new CameraPreset("[1] Workcell Overview",   new Vector3(-1.40f, 1.65f, -2.10f), new Vector3(28.0f,  36.0f, 0f), 52f),
+            new CameraPreset("[2] Sorting & Obstacles", new Vector3( 1.35f, 1.50f, -1.65f), new Vector3(26.5f, -39.0f, 0f), 50f),
+            new CameraPreset("[3] Gripper Close-Up",    new Vector3(-0.55f, 0.55f, -1.15f), new Vector3(29.0f,  45.0f, 0f), 38f)
         };
 
         ApplyPresetInstant(0);
@@ -76,6 +76,12 @@ public class WorkcellCameraController : MonoBehaviour
 
         // Phím [3]: Cận cảnh Trạm Gắp (Close-Up Gripper)
         if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3)) SwitchToPreset(2);
+
+        // Phím [C]: Bật/tắt thanh điều khiển Camera HUD
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            showGUI = !showGUI;
+        }
 
         // Lướt chuyển động mượt mà (Smooth Interpolation)
         transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * transitionSpeed);
@@ -112,15 +118,15 @@ public class WorkcellCameraController : MonoBehaviour
     {
         if (!showGUI) return;
 
-        // Thanh công cụ chuyển camera (chỉ hiện khi showGUI = true)
-        GUILayout.BeginArea(new Rect(guiX, guiY, 310, 36), GUI.skin.box);
+        // Thanh công cụ chuyển camera điện ảnh (Bật/Tắt bằng phím [C])
+        GUILayout.BeginArea(new Rect(guiX, guiY, 440, 36), GUI.skin.box);
         GUILayout.BeginHorizontal();
 
         for (int i = 0; i < presets.Length; i++)
         {
             bool isCurrent = (i == currentPresetIndex);
             string btnText = isCurrent ? $"<b>▶ {presets[i].name}</b>" : presets[i].name;
-            if (GUILayout.Button(btnText, GUILayout.Height(22)))
+            if (GUILayout.Button(btnText, GUILayout.Height(24)))
             {
                 SwitchToPreset(i);
             }

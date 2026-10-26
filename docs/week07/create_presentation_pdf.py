@@ -325,26 +325,26 @@ def build_pdf(output_path):
     story.append(PageBreak())
 
     # =========================================================================
-    # SLIDE 06: GRIPPER PARALLELISM & VISUAL ALIGNMENT
+    # SLIDE 06: GRIPPER PARALLELISM, BRAKING & PRESENTATION CAMERAS
     # =========================================================================
-    story.append(make_header("Precision Kinematics & UI", "Gripper Parallelism & Interactive Waypoint Markers", 6))
+    story.append(make_header("Precision Kinematics & UI", "Parallel Grasping, Conveyor Braking, & Presentation Cameras", 6))
     story.append(Spacer(1, 10))
 
     c6_left = [
-        "<b>Skew Root Cause:</b> Robot shoulder rotates +16.87° (0.2945 rad) when reaching conveyor. Legacy Joint 5 (wrist_3_joint) was set to +30.31° (0.5291 rad). Residual difference: Δψ = 30.31° - 16.87° = 13.44°.",
-        "<b>Kinematic Consequence:</b> Gripper jaws descended at a skewed 13.4° angle relative to the box faces, causing slight asymmetric contact.",
-        "<b>Mathematical Realignment:</b> Set wrist_3_joint = 0.2945 rad, exactly canceling shoulder yaw: Net Yaw = 16.87° - 16.87° = 0.0° relative to world axes.",
-        "<b>Quaternion Correction:</b> q_standby = [-0.7071068, -0.7071068, 0.0031, 0.0008] produces Yaw = 90.00°.",
-        "<b>Result:</b> Gripper jaws are now 100% parallel to the cube faces and conveyor sides during descent and grasp!"
+        "<b>Geometric Skew Resolution:</b> Synchronized Wrist 3 (+16.87°) with Shoulder Pan (+16.87°) and q_standby to cancel the 13.4° delta, aligning jaws orthogonal to the belt.",
+        "<b>Electro-Mechanical Braking:</b> PickZoneSensor.cs zeroes velocity at X = 0.00m upon conveyor stop, eliminating the 4~6cm coasting slide that caused off-center picks.",
+        "<b>Conveyor Yaw Constraint:</b> RandomObjectSpawner.cs applies FreezeRotationX/Y/Z to ensure cubes travel 100% square along the belt without twisting.",
+        "<b>Self-Centering Snap Grasp:</b> GripperController.cs automatically centers cube X, Z coordinates between rubber pads and squares rotation (Quaternion.identity).",
+        "<b>Result:</b> Jaws close 100% flush against cube faces with zero mid-air floating or lateral skew!"
     ]
     c6_right = [
-        "<b>Waypoint_Visual_Markers:</b> 5 colored glowing spheres in Unity indicating Standby, Pick Zone, Red Bin, Yellow Bin, and Blue Bin.",
-        "<b>Live Keyboard Toggle [M]:</b> Added [M] key shortcut in UR10eController.cs to toggle marker visibility on/off instantly during live demonstrations.",
-        "<b>Inspector Customization:</b> Exposed markerScale (0.045m), markerPickPos (0, 0.16, -0.60), and bin coordinates directly in Unity Inspector.",
-        "<b>Non-Colliding Visuals:</b> All marker colliders disabled to ensure zero interference with PhysX simulation physics.",
-        "<b>Clean Presentation Mode:</b> Press [M] to hide markers for a clean production look, or press [M] to reveal them for academic defense."
+        "<b>Preset [1] Workcell Overview:</b> Pos (-1.40, 1.65, -2.10m), Pitch 28°, Yaw 36° — Complete 3/4 isometric perspective of conveyor, robot, and 3 bins.",
+        "<b>Preset [2] Sorting & Obstacles:</b> Pos (1.35, 1.50, -1.65m), Pitch 26.5°, Yaw -39° — Elevated front-right view framing all 3 bins and apex clearance.",
+        "<b>Preset [3] Gripper Close-Up:</b> Pos (-0.55, 0.55, -1.15m), Pitch 29°, Yaw 45° — Close-up inspection (<0.9m) of pick station and parallel jaw closure.",
+        "<b>Interactive Hotkeys:</b> [M] Toggle Markers | [V] Toggle CV PiP | [C] Toggle Camera HUD | [T] Trajectory Trail.",
+        "<b>Defense Ready:</b> Allows seamless switching between architectural overview and sub-millimeter grasp details during live defense."
     ]
-    t6 = Table([[make_card("Gripper Parallel Jaw Realignment", c6_left, 376), make_card("Interactive Waypoint Markers (Key [M])", c6_right, 376)]], colWidths=[388, 388])
+    t6 = Table([[make_card("Parallel Grasp & Self-Centering Alignment", c6_left, 376), make_card("Cinematic Presentation Cameras & UI", c6_right, 376)]], colWidths=[388, 388])
     t6.setStyle(TableStyle([('VALIGN', (0, 0), (-1, -1), 'TOP')]))
     story.append(t6)
     story.append(PageBreak())

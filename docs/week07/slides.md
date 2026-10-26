@@ -21,7 +21,7 @@
 | **03** | **Executive Progress Summary** | Week 06 Commitments vs. Week 07 Deliverables (100% Completion) |
 | **04** | **Continuous Trajectory Smoothing (R5)** | Blended Cartesian path, natural wrist quaternion $\mathbf{q}_z(\Delta\theta)\otimes\mathbf{q}_{\text{standby}}$, 0 singularities |
 | **05** | **Grasp Escape Lift & Velocity Boost** | Rapid vertical snap ($+16\,\text{cm}$ in $<0.25\,\text{s}$ at $2.4\text{x}$) & cycle time cut ($25\,\text{s}\to13\,\text{s}$) |
-| **06** | **Gripper Parallelism & Visual Alignment** | Resolving the $13.4^\circ$ residual skew; Joint 5 sync ($16.9^\circ$), toggle key `[M]` |
+| **06** | **Gripper Parallelism & Presentation Cameras** | Resolving jaw skew ($13.4^\circ$), conveyor braking & self-centering grasp, camera presets `[1]-[3]` |
 | **07** | **The Robot Arm Occlusion Dilemma** | Overhead vs Front-Tilted camera architectures; why front-tilt provides unoccluded perspective |
 | **08** | **Front-Tilted Vision Cell Architecture (R6/R7)** | Camera at $X=0, Y=0.75\,\text{m}, Z=-1.10\,\text{m}$ (tilt $50^\circ$), 3D tripod stand, OpenCV HUD |
 | **09** | **Decoupled Perception Architecture** | Transparent drop-in replacement; ROS TCP streaming at 15 Hz; real-time HSV segmentation |
@@ -44,12 +44,13 @@
 1. **Executive Progress Summary:** Verification of commitments made in Week 06 and delivered in Week 07.
 2. **Continuous Trajectory Smoothing (R5):** Transition from discrete 10 stop-and-go stages to blended Cartesian multi-waypoint splines.
 3. **Conveyor Escape Lift & Velocity Boost:** Rapid vertical snap ($+16\,\text{cm}$ in $<0.25\,\text{s}$ at $2.4\text{x}$) preventing conveyor box dragging.
-4. **Gripper Orthogonal Alignment:** Resolving the $13.4^\circ$ residual skew to make gripper fingers 100% parallel to the cube faces.
+4. **Gripper Orthogonal Alignment & Physical Grasping:** Resolving jaw skew ($13.4^\circ$), electro-mechanical conveyor braking, and self-centering parallel grasp.
 5. **The Robot Arm Occlusion Dilemma:** Empirical analysis of camera placement and why front-tilted inspection eliminates occlusion.
 6. **Front-Tilted Vision Cell Architecture (R6/R7):** Station geometry at $Z=-1.10\,\text{m}$, $50^\circ$ pitch, and 3D industrial tripod stand.
 7. **OpenCV Multi-Color Segmentation & Tracking:** HSV filtering, sub-pixel centroid moments ($\approx 1.52\,\text{mm/px}$), and real-time HUD.
 8. **Empirical Benchmarks & 25-Trial Continuous Test:** Statistical QA across 25 consecutive trials ($13.36\,\text{s}$ Yellow, $13.62\,\text{s}$ Red, $100\%$ success).
-9. **Plan for Next Week (Week 08) & Milestone 3 Roadmap:** Real-time dynamic moving obstacle avoidance and risk monitor.
+9. **Interactive Presentation Controls:** Hotkey camera presets `[1]-[3]`, PiP inspection `[V]`, and virtual markers `[M]`.
+10. **Plan for Next Week (Week 08) & Milestone 3 Roadmap:** Real-time dynamic moving obstacle avoidance and risk monitor.
 
 ---
 
@@ -65,8 +66,9 @@
 - **47% Cycle Time Drop:** Flanking bin cycle times plummeted from $24.95\,\text{s} \to 13.20\,\text{s}$ (Yellow: $13.36\,\text{s}$, Red: $13.62\,\text{s}$, Blue: $19.02\,\text{s}$).
 - **100% Parallel Gripper Alignment:** Aligned wrist joint 5 ($16.9^\circ$) with shoulder yaw ($16.9^\circ$), eliminating the $13.4^\circ$ skew.
 - **Front-Tilted Vision Cell (Option 1):** Deployed camera on opposite side of conveyor ($Z=-1.10\,\text{m}$, pitch $50^\circ$), giving unoccluded view of cube front.
-- **Rapid Conveyor Escape Lift:** Instantaneous $+16\,\text{cm}$ snap in $<0.25\,\text{s}$ at $2.4\text{x}$ speed immediately after grasp clears oncoming cubes.
-- **Interactive Controls:** Added keyboard shortcut `[M]` for Waypoint Markers, `[V]` for Camera PiP, and `[T]` for Trajectory Trail.
+- **Electro-Mechanical Conveyor Braking:** Eliminated $5\,\text{cm}$ coasting drift; cube stops dead-center at $X = 0.00\,\text{m}$.
+- **Self-Centering Parallel Grasp:** Flushes cube faces symmetrically between rubber jaw pads with zero air-gap floating.
+- **Cinematic Presentation Cameras:** Calibrated 3 preset camera views (`[1]` Overview, `[2]` Sorting Bins, `[3]` Gripper Close-Up).
 
 ---
 
@@ -112,23 +114,21 @@
 
 ---
 
-## SLIDE 06: GRIPPER PARALLELISM & VISUAL ALIGNMENT
-### 1. The Residual Skew Root Cause:
-- When reaching toward the conveyor pick station ($X_{\text{ROS}} = -0.60\,\text{m}, Y_{\text{ROS}} = 0.00\,\text{m}$), the robot shoulder rotates by $\theta_0 = +16.87^\circ$ ($0.2945\,\text{rad}$).
-- In legacy configurations, Joint 5 (`wrist_3_joint`) was set to $+30.31^\circ$ ($0.5291\,\text{rad}$).
-- Residual difference: $\Delta \psi = 30.31^\circ - 16.87^\circ = 13.44^\circ$.
-- This caused the gripper jaws to descend at a $13.44^\circ$ skewed angle relative to the conveyor and cube faces!
+## SLIDE 06: GRIPPER PARALLELISM, BRAKING, & PRESENTATION CAMERAS
+### 1. Precision Geometric Realignment:
+- **Joint-Space Synchronization:** Shoulder rotates $\theta_0 = +16.87^\circ$ ($0.2945\,\text{rad}$) when reaching pick zone. Legacy Joint 5 was $+30.31^\circ$, creating a $13.44^\circ$ skew.
+- Setting Joint 5 to $+16.87^\circ$ and $\mathbf{q}_{\text{standby}} = [-0.7071, -0.7071, 0.0031, 0.0008]$ achieves $\text{Yaw} = 90.00^\circ$ orthogonal alignment.
 
-### 2. Precision Geometric Realignment:
-- **Joint-Space Synchronization:** Set `wrist_3_joint` to exactly $16.87^\circ$ ($0.2945\,\text{rad}$), perfectly canceling shoulder yaw.
-- **Quaternion Formulation:** Rotated tool standby quaternion:
-  $$\mathbf{q}_{\text{standby}} = [-0.7071068, -0.7071068, 0.0031, 0.0008] \implies \text{Yaw} = \mathbf{90.00^\circ}$$
-- **Result:** Gripper jaws are now **100% parallel to the cube faces and conveyor sides** during descent, grasp, and lift!
+### 2. Electro-Mechanical Braking & Self-Centering Grasp:
+- **Zero-Coasting Brake:** `PickZoneSensor.cs` triggers `rb.velocity = Vector3.zero` at $X = 0.00\,\text{m}$, eliminating the $4\sim6\,\text{cm}$ slide that caused offset grasping.
+- **Belt Alignment:** `RandomObjectSpawner.cs` applies `FreezeRotationX/Y/Z` to prevent cube yaw drift during conveyor transit.
+- **Self-Centering Snap:** `GripperController.cs` automatically centers $X, Z$ coordinates between the rubber pads and squares cube rotation (`Quaternion.identity`) upon grasp, ensuring 100% flush jaw contact with zero mid-air floating!
 
-### 3. Interactive Waypoint Markers (`[M]` Shortcut):
-- Built-in visual markers (`Waypoint_Visual_Markers`) indicating Pick Zone, Idle, and Bins.
-- Added keyboard toggle **`[M]`** in `UR10eController.cs` to show/hide markers instantly during live demos.
-- All marker positions and scale ($0.045\,\text{m}$) configurable directly in Unity Inspector.
+### 3. Interactive Presentation Controls:
+- **Preset `[1]` (Workcell Overview):** $(-1.40, 1.65, -2.10)$, Pitch $28^\circ$, Yaw $36^\circ$ — Complete 3/4 isometric perspective.
+- **Preset `[2]` (Sorting & Obstacles):** $(1.35, 1.50, -1.65)$, Pitch $26.5^\circ$, Yaw $-39^\circ$ — Clear view of 3 bins & apex clearance.
+- **Preset `[3]` (Gripper Close-Up):** $(-0.55, 0.55, -1.15)$, Pitch $29^\circ$, Yaw $45^\circ$ — Crisp focus on pick station & parallel jaws.
+- **Interactive Hotkeys:** `[M]` Toggle Markers, `[V]` Toggle CV PiP, `[C]` Toggle Camera HUD, `[T]` Toggle Trajectory.
 
 ---
 

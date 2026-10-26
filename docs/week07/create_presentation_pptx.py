@@ -330,26 +330,26 @@ def build_presentation(output_path):
     add_bullet(c5_2, "Overall Throughput:", "Mean cycle time reduced from ~25.0s to 15.68s, achieving a ~37% productivity boost without exceeding UR10e motor limits.", color=COLOR_SUCCESS)
 
     # =========================================================================
-    # SLIDE 06: GRIPPER PARALLELISM & VISUAL ALIGNMENT
+    # SLIDE 06: GRIPPER PARALLELISM, BRAKING & PRESENTATION CAMERAS
     # =========================================================================
     s6 = prs.slides.add_slide(blank_layout)
-    add_header(s6, "Precision Kinematics & UI", "Gripper Parallelism & Interactive Waypoint Markers", "06/12")
+    add_header(s6, "Precision Kinematics & UI", "Parallel Grasping, Conveyor Braking, & Presentation Cameras", "06/12")
 
     c6_1 = create_card(s6, Inches(0.8), Inches(1.6), Inches(5.7), Inches(5.3),
-                       "Gripper Parallel Jaw Realignment", "Eliminating the 13.4-degree residual jaw skew")
-    add_bullet(c6_1, "Skew Root Cause:", "Robot shoulder rotates +16.87° (0.2945 rad) when reaching conveyor. Legacy Joint 5 (wrist_3_joint) was set to +30.31° (0.5291 rad). Residual difference: Δψ = 30.31° - 16.87° = 13.44°.")
-    add_bullet(c6_1, "Kinematic Consequence:", "Gripper jaws descended at a skewed 13.4° angle relative to the box faces, causing slight asymmetric contact.")
-    add_bullet(c6_1, "Mathematical Realignment:", "Set wrist_3_joint = 0.2945 rad, exactly canceling shoulder yaw: Net Yaw = 16.87° - 16.87° = 0.0° relative to world axes.")
-    add_bullet(c6_1, "Quaternion Correction:", "q_standby = [-0.7071068, -0.7071068, 0.0031, 0.0008] produces Yaw = 90.00°.")
-    add_bullet(c6_1, "Result:", "Gripper jaws are now 100% parallel to the cube faces and conveyor sides during descent and grasp!", color=COLOR_SUCCESS)
+                       "Parallel Grasp & Self-Centering Alignment", "Eliminating jaw skew, coasting drift, and mid-air floating")
+    add_bullet(c6_1, "Geometric Skew Resolution:", "Synchronized Wrist 3 (+16.87°) with Shoulder Pan (+16.87°) and q_standby to cancel the 13.4° delta, aligning jaws orthogonal to the belt.")
+    add_bullet(c6_1, "Electro-Mechanical Braking:", "PickZoneSensor.cs zeroes velocity at X = 0.00m upon conveyor stop, eliminating the 4~6cm coasting slide that caused off-center picks.")
+    add_bullet(c6_1, "Conveyor Yaw Constraint:", "RandomObjectSpawner.cs applies FreezeRotationX/Y/Z to ensure cubes travel 100% square along the belt without twisting.")
+    add_bullet(c6_1, "Self-Centering Snap Grasp:", "GripperController.cs automatically centers cube X, Z coordinates between rubber pads and squares rotation (Quaternion.identity).")
+    add_bullet(c6_1, "Result:", "Jaws close 100% flush against cube faces with zero mid-air floating or lateral skew!", color=COLOR_SUCCESS)
 
     c6_2 = create_card(s6, Inches(6.8), Inches(1.6), Inches(5.7), Inches(5.3),
-                       "Interactive Waypoint Markers (Key [M])", "Customizable visual targets in Unity workcell")
-    add_bullet(c6_2, "Waypoint_Visual_Markers:", "5 colored glowing spheres in Unity indicating Standby, Pick Zone, Red Bin, Yellow Bin, and Blue Bin.")
-    add_bullet(c6_2, "Live Keyboard Toggle [M]:", "Added [M] key shortcut in UR10eController.cs to toggle marker visibility on/off instantly during live demonstrations.")
-    add_bullet(c6_2, "Inspector Customization:", "Exposed markerScale (0.045m), markerPickPos (0, 0.16, -0.60), and bin coordinates directly in Unity Inspector.")
-    add_bullet(c6_2, "Non-Colliding Visuals:", "All marker colliders disabled to ensure zero interference with PhysX simulation physics.")
-    add_bullet(c6_2, "Clean Presentation Mode:", "Press [M] to hide markers for a clean production look, or press [M] to reveal them for academic defense.", color=COLOR_SUCCESS)
+                       "Cinematic Presentation Cameras & UI", "Optimal multi-view presets & interactive live demonstration controls")
+    add_bullet(c6_2, "Preset [1] Workcell Overview:", "Pos (-1.40, 1.65, -2.10m), Pitch 28°, Yaw 36° — Complete 3/4 isometric perspective of conveyor, robot, and 3 bins.")
+    add_bullet(c6_2, "Preset [2] Sorting & Obstacles:", "Pos (1.35, 1.50, -1.65m), Pitch 26.5°, Yaw -39° — Elevated front-right view framing all 3 bins and apex clearance.")
+    add_bullet(c6_2, "Preset [3] Gripper Close-Up:", "Pos (-0.55, 0.55, -1.15m), Pitch 29°, Yaw 45° — Close-up inspection (<0.9m) of pick station and parallel jaw closure.")
+    add_bullet(c6_2, "Interactive Hotkeys:", "[M] Toggle Waypoint Markers | [V] Toggle CV PiP | [C] Toggle Camera HUD | [T] Trajectory Trail.", color=COLOR_PRIMARY)
+    add_bullet(c6_2, "Defense Ready:", "Allows seamless switching between high-level architectural overview and sub-millimeter grasp details during live defense.", color=COLOR_SUCCESS)
 
     # =========================================================================
     # SLIDE 07: THE ROBOT ARM OCCLUSION DILEMMA
