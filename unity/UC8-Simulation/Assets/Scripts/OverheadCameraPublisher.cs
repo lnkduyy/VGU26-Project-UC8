@@ -30,15 +30,12 @@ public class OverheadCameraPublisher : MonoBehaviour
     [Range(30, 95)]
     [SerializeField] private int jpegQuality = 80;
 
-    [Header("Mount Transform (Model 1: Upstream Inspection Station)")]
-    [Tooltip("Upstream inspection mount (X=-0.65m in Unity, 65cm upstream of pick station to eliminate arm visual occlusion)")]
-    [SerializeField] private Vector3 mountPosition = new Vector3(-0.65f, 1.25f, -0.60f);
+    [Header("Mount Transform (Overhead Pick Station)")]
+    [Tooltip("Camera position directly above the conveyor pick station (Z=-0.60m in Unity world)")]
+    [SerializeField] private Vector3 mountPosition = new Vector3(0.0f, 1.25f, -0.60f);
     [Tooltip("Looking straight down onto the conveyor")]
     [SerializeField] private Vector3 mountEulerAngles = new Vector3(90.0f, 0.0f, 0.0f);
     [SerializeField] private float fieldOfView = 45f;
-
-    [Header("3D Physical Gantry Arch")]
-    [SerializeField] private bool renderPhysicalGantry = true;
 
     [Header("GUI Preview Window")]
     [SerializeField] private bool showPreview = true;
@@ -88,59 +85,7 @@ public class OverheadCameraPublisher : MonoBehaviour
 
         texture2D = new Texture2D(imageWidth, imageHeight, TextureFormat.RGB24, false);
 
-        // 3. Procedurally generate realistic 3D industrial gantry arch in Unity scene
-        if (renderPhysicalGantry)
-        {
-            BuildPhysicalInspectionGantry();
-        }
-
-        Debug.Log($"[OverheadCamera] Initialized Model 1 Upstream Camera at {transform.position}, resolution {imageWidth}x{imageHeight} @ {publishRateHz}Hz");
-    }
-
-    /// <summary>
-    /// Procedurally constructs a realistic industrial inspection arch/gantry over the conveyor.
-    /// Provides physical realism in Unity scene while completely avoiding collision interference.
-    /// </summary>
-    private void BuildPhysicalInspectionGantry()
-    {
-        if (transform.Find("GantryArch") != null) return;
-
-        GameObject gantryRoot = new GameObject("GantryArch");
-        gantryRoot.transform.SetParent(this.transform.parent, false);
-
-        Color postColor = new Color(0.22f, 0.24f, 0.26f); // Industrial dark matte steel
-        Color beamColor = new Color(0.85f, 0.72f, 0.08f); // Safety inspection yellow
-        Color camBodyColor = new Color(0.12f, 0.12f, 0.14f); // Cognex/Keyence black housing
-
-        Shader stdShader = Shader.Find("Standard") ?? Shader.Find("Diffuse");
-        Material postMat = new Material(stdShader) { color = postColor };
-        Material beamMat = new Material(stdShader) { color = beamColor };
-        Material camMat = new Material(stdShader) { color = camBodyColor };
-
-        // Post 1 (Left flank across conveyor)
-        CreateGantryPart(gantryRoot.transform, "Post_Left", new Vector3(-0.65f, 0.60f, -0.88f), new Vector3(0.06f, 1.20f, 0.06f), postMat);
-        // Post 2 (Right flank across conveyor)
-        CreateGantryPart(gantryRoot.transform, "Post_Right", new Vector3(-0.65f, 0.60f, -0.32f), new Vector3(0.06f, 1.20f, 0.06f), postMat);
-        // Crossbeam spanning over conveyor
-        CreateGantryPart(gantryRoot.transform, "Crossbeam", new Vector3(-0.65f, 1.20f, -0.60f), new Vector3(0.08f, 0.06f, 0.62f), beamMat);
-        // Camera enclosure
-        CreateGantryPart(gantryRoot.transform, "CameraHousing", new Vector3(-0.65f, 1.15f, -0.60f), new Vector3(0.10f, 0.06f, 0.10f), camMat);
-    }
-
-    private void CreateGantryPart(Transform parent, string name, Vector3 pos, Vector3 scale, Material mat)
-    {
-        GameObject part = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        part.name = name;
-        part.transform.SetParent(parent, false);
-        part.transform.position = pos;
-        part.transform.localScale = scale;
-
-        // Remove collider to prevent any physics or raycast conflicts
-        Collider col = part.GetComponent<Collider>();
-        if (col != null) Destroy(col);
-
-        Renderer rend = part.GetComponent<Renderer>();
-        if (rend != null) rend.material = mat;
+        Debug.Log($"[OverheadCamera] Initialized Overhead Camera at {transform.position}, resolution {imageWidth}x{imageHeight} @ {publishRateHz}Hz");
     }
 
     private void Start()
@@ -236,7 +181,7 @@ public class OverheadCameraPublisher : MonoBehaviour
         Rect pipRect = new Rect(Screen.width - pipWidth - padding, Screen.height - pipHeight - padding, pipWidth, pipHeight);
 
         // Outer background box
-        GUI.Box(new Rect(pipRect.x - 2, pipRect.y - 20, pipWidth + 4, pipHeight + 22), "Upstream Inspection Station [V]");
+        GUI.Box(new Rect(pipRect.x - 2, pipRect.y - 20, pipWidth + 4, pipHeight + 22), "Overhead Camera View [V]");
         GUI.DrawTexture(pipRect, renderTexture, ScaleMode.ScaleToFit, false);
     }
 
