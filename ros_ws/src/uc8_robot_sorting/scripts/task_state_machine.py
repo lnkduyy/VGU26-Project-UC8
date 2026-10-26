@@ -298,19 +298,20 @@ class TaskStateMachine:
         scaled_plan = self.scale_trajectory_speed(plan, self.speed_multiplier)
         return self.group.execute(scaled_plan, wait=True)
 
-    def move_cartesian_trajectory(self, waypoints, min_fraction=0.85):
+    def move_cartesian_trajectory(self, waypoints, min_fraction=0.85, speed_factor=None):
         """
         Executes a continuous multi-waypoint Cartesian trajectory with corner blending and speed scaling.
         Eliminates intermediate stop-and-go jerks, reducing cycle times by 40-55%.
         """
         try:
+            factor = speed_factor if speed_factor is not None else self.speed_multiplier
             t_plan_start = time.time()
             plan, fraction = self.group.compute_cartesian_path(waypoints, 0.01, True)
             t_plan_ms = (time.time() - t_plan_start) * 1000.0
 
             if fraction >= min_fraction and len(plan.joint_trajectory.points) > 0:
-                rospy.loginfo(f"[MoveIt Blended Path] Successfully planned continuous trajectory with {len(waypoints)} waypoints ({fraction*100:.1f}% fraction, {len(plan.joint_trajectory.points)} pts) in {t_plan_ms:.1f}ms")
-                scaled_plan = self.scale_trajectory_speed(plan, self.speed_multiplier)
+                rospy.loginfo(f"[MoveIt Blended Path] Successfully planned continuous trajectory with {len(waypoints)} waypoints ({fraction*100:.1f}% fraction, {len(plan.joint_trajectory.points)} pts) in {t_plan_ms:.1f}ms (Speed: {factor:.1f}x)")
+                scaled_plan = self.scale_trajectory_speed(plan, factor)
                 return self.group.execute(scaled_plan, wait=True)
             else:
                 rospy.logwarn(f"[MoveIt Blended Path] Path fraction {fraction*100:.1f}% below minimum threshold {min_fraction*100:.1f}%!")
@@ -412,8 +413,25 @@ class TaskStateMachine:
             fail_stage = "GRASP"
             rospy.loginfo("[STATE: GRASP] Sending grasp command to Unity...")
             self.gripper_pub.publish(Bool(data=True))
-            time.sleep(0.2)
+            time.sleep(0.15)
             grasp_success = True
+
+            # -------------------------------------------------------------
+            # RAPID CONVEYOR ESCAPE LIFT
+            # Rapidly snaps object vertically up by 16cm in <0.25s at 2.4x speed
+            # Completely clears oncoming conveyor boxes before long-distance planning!
+            # -------------------------------------------------------------
+            rospy.loginfo("[STATE: ESCAPE_LIFT] Rapid vertical snap to clear oncoming conveyor objects...")
+            escape_pose = Pose(
+                position=Point(x=object_pose.position.x, y=object_pose.position.y, z=object_pose.position.z + self.pregrasp_offset_z),
+                orientation=o_standby
+            )
+            plan_esc, frac_esc = self.group.compute_cartesian_path([escape_pose], 0.01, True)
+            if frac_esc > 0.8:
+                scaled_esc = self.scale_trajectory_speed(plan_esc, max(self.speed_multiplier, 2.4))
+                self.group.execute(scaled_esc, wait=True)
+            else:
+                self.move_cartesian_line(escape_pose)
 
             # -------------------------------------------------------------
             # STEP 4 & 5: BLENDED CONTINUOUS TRANSIT TO BIN (Option 2 - Requirement R5)
@@ -441,7 +459,8 @@ class TaskStateMachine:
             # 3. Vertical elevator descent into Bin
             transit_waypoints.append(Pose(position=Point(x=bin_pos.x, y=bin_pos.y, z=self.bin_drop_z), orientation=o_bin))
 
-            transit_ok = self.move_cartesian_trajectory(transit_waypoints, min_fraction=0.85)
+            speed_factor = 2.2 if object_type == "Blue" else self.speed_multiplier
+            transit_ok = self.move_cartesian_trajectory(transit_waypoints, min_fraction=0.85, speed_factor=speed_factor)
             if not transit_ok:
                 rospy.logwarn("[STATE: MOVE_TO_BIN] Blended trajectory failed, falling back to 4-leg step trajectory...")
                 curr_p = self.group.get_current_pose().pose
@@ -480,7 +499,7 @@ class TaskStateMachine:
             fail_stage = "RELEASE"
             rospy.loginfo(f"[STATE: RELEASE] Releasing object into {object_type} bin...")
             self.gripper_pub.publish(Bool(data=False))
-            time.sleep(0.2)
+            time.sleep(0.15)
             place_success = True
 
             # -------------------------------------------------------------
@@ -504,7 +523,7 @@ class TaskStateMachine:
             # 3. Descent directly into Standby pose
             return_waypoints.append(Pose(position=Point(x=-0.60, y=0.00, z=0.42), orientation=o_standby))
 
-            return_ok = self.move_cartesian_trajectory(return_waypoints, min_fraction=0.85)
+            return_ok = self.move_cartesian_trajectory(return_waypoints, min_fraction=0.85, speed_factor=speed_factor)
             if not return_ok:
                 rospy.logwarn("[STATE: READY] Blended return failed, falling back to 3-leg return...")
                 up_pose = Pose(position=Point(curr_p.position.x, curr_p.position.y, z_apex), orientation=o_bin)
