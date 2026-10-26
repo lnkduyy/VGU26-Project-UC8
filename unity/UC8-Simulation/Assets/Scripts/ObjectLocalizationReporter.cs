@@ -16,6 +16,10 @@ public class ObjectLocalizationReporter : MonoBehaviour
     [Tooltip("Robot base_link origin. If left empty, defaults to UnityWorld")]
     [SerializeField] private Transform referenceFrame;
 
+    [Header("Perception Mode (Milestone 2 - Requirement R6 & R7)")]
+    [Tooltip("If true, publishes ground truth to /ground_truth_object_pose to allow OpenCV vision node to be the primary detector and compute perception error.")]
+    [SerializeField] private bool publishAsGroundTruth = true;
+
     [Header("ROS Topic Names")]
     [SerializeField] private string poseTopic = "/detected_object_pose";
     [SerializeField] private string typeTopic = "/detected_object_type";
@@ -24,15 +28,12 @@ public class ObjectLocalizationReporter : MonoBehaviour
 
     private void Awake()
     {
-        // Ensure topic names are valid
-        if (string.IsNullOrEmpty(poseTopic)) poseTopic = "/detected_object_pose";
-        if (string.IsNullOrEmpty(typeTopic)) typeTopic = "/detected_object_type";
+        ConfigureTopicNames();
     }
 
     private void Start()
     {
-        if (string.IsNullOrEmpty(poseTopic)) poseTopic = "/detected_object_pose";
-        if (string.IsNullOrEmpty(typeTopic)) typeTopic = "/detected_object_type";
+        ConfigureTopicNames();
 
         // Initialize ROS TCP Endpoint connection
         ros = ROSConnection.GetOrCreateInstance();
@@ -41,7 +42,21 @@ public class ObjectLocalizationReporter : MonoBehaviour
         ros.RegisterPublisher<PoseMsg>(poseTopic);
         ros.RegisterPublisher<StringMsg>(typeTopic);
 
-        Debug.Log($"[Localization] Registered ROS publishers: {poseTopic}, {typeTopic}");
+        Debug.Log($"[Localization] Registered ROS publishers: {poseTopic}, {typeTopic} (GroundTruthMode={publishAsGroundTruth})");
+    }
+
+    private void ConfigureTopicNames()
+    {
+        if (publishAsGroundTruth)
+        {
+            poseTopic = "/ground_truth_object_pose";
+            typeTopic = "/ground_truth_object_type";
+        }
+        else
+        {
+            if (string.IsNullOrEmpty(poseTopic)) poseTopic = "/detected_object_pose";
+            if (string.IsNullOrEmpty(typeTopic)) typeTopic = "/detected_object_type";
+        }
     }
 
     /// <summary>
@@ -55,8 +70,7 @@ public class ObjectLocalizationReporter : MonoBehaviour
             return;
         }
 
-        if (string.IsNullOrEmpty(poseTopic)) poseTopic = "/detected_object_pose";
-        if (string.IsNullOrEmpty(typeTopic)) typeTopic = "/detected_object_type";
+        ConfigureTopicNames();
 
         Vector3 relativePosition;
         Quaternion relativeRotation;
