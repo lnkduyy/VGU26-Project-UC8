@@ -37,6 +37,8 @@ public class PickZoneSensor : MonoBehaviour
     {
         if (conveyor == null) conveyor = FindObjectOfType<ConveyorController>();
         if (localizationReporter == null) localizationReporter = GetComponent<ObjectLocalizationReporter>();
+        // Khóa điểm dừng chuẩn xác tại tâm trạm gắp X = 0.0m
+        stopThresholdX = 0.0f;
     }
 
     private void Update()
@@ -69,7 +71,21 @@ public class PickZoneSensor : MonoBehaviour
             {
                 hasStoppedConveyor = true;
                 if (conveyor != null) conveyor.StopConveyor();
-                Debug.Log($"[PickZone] Object {currentTargetObject.name} reached pick station center (X={cubeX:F3}m). Conveyor STOPPED.");
+
+                // Triệt tiêu quán tính trôi vật lý (Electro-mechanical brake)
+                Rigidbody rb = currentTargetObject.GetComponent<Rigidbody>();
+                if (rb != null)
+                {
+                    rb.velocity = Vector3.zero;
+                    rb.angularVelocity = Vector3.zero;
+                }
+
+                // Căn chuẩn nhẹ tọa độ X về đúng tâm trạm gắp (X=0.0m)
+                Vector3 settledPos = currentTargetObject.transform.position;
+                settledPos.x = stopThresholdX;
+                currentTargetObject.transform.position = settledPos;
+
+                Debug.Log($"[PickZone] Object {currentTargetObject.name} reached pick station center (X={currentTargetObject.transform.position.x:F3}m). Conveyor STOPPED & Braked.");
             }
 
             // Stream tọa độ sang ROS với tần số publishRateHz (10 Hz)

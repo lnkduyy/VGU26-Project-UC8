@@ -170,6 +170,8 @@ public class RandomObjectSpawner : MonoBehaviour
         Rigidbody rb = newCube.AddComponent<Rigidbody>();
         rb.mass = 0.2f;
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        // Khóa hoàn toàn góc xoay để phôi luôn trôi vuông vắn dọc rãnh băng chuyền, song song 100% với tay gắp
+        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
 
         // Triệt tiêu độ nảy (Zero-Bounce)
         PhysicMaterial noBounceMat = new PhysicMaterial("NoBounceMat")

@@ -5303,7 +5303,7 @@ MonoBehaviour:
   conveyor: {fileID: 572547006}
   localizationReporter: {fileID: 1127199771}
   publishRateHz: 10
-  stopThresholdX: -0.015
+  stopThresholdX: 0
 --- !u!65 &1127199773
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8763,7 +8763,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   commandTopic: /ur10e/gripper_command
   statusTopic: /ur10e/gripper_status
-  graspRadius: 0.12
+  graspRadius: 0.09
   attachPoint: {fileID: 0}
 --- !u!114 &1821516863
 MonoBehaviour:

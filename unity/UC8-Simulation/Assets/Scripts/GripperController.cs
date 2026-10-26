@@ -19,7 +19,7 @@ public class GripperController : MonoBehaviour
 
     [Header("Attach Logic Configuration")]
     [Tooltip("Search radius around end-effector for target cube (meters)")]
-    [SerializeField] private float graspRadius = 0.22f;
+    [SerializeField] private float graspRadius = 0.09f;
 
     [Tooltip("Transform of tool0 end-effector. If left empty, uses this GameObject")]
     [SerializeField] private Transform attachPoint;
@@ -48,6 +48,7 @@ public class GripperController : MonoBehaviour
     private void Awake()
     {
         ResolveAttachPoint();
+        if (graspRadius > 0.10f) graspRadius = 0.09f;
     }
 
     private void Start()
@@ -360,8 +361,17 @@ public class GripperController : MonoBehaviour
                 col.isTrigger = true;
             }
 
-            // Parenting: Khóa vật thể vào tay gắp tool0, giữ nguyên 100% tọa độ thế giới và góc quay thế giới!
-            // Tuyệt đối không can thiệp position/rotation để chống giật, xê dịch hay xoay lệch hộp khi kẹp
+            // Tự định tâm cơ khí (Self-Centering Parallel Grasp):
+            // 1. Căn phẳng góc xoay của hộp vuông vắn 100% với má kẹp cao su và băng chuyền
+            attachedObject.transform.rotation = Quaternion.identity;
+
+            // 2. Căn tâm phôi khớp chính xác vào trục giữa 2 ngón kẹp (X và Z)
+            Vector3 snappedPos = attachedObject.transform.position;
+            snappedPos.x = attachPoint.position.x;
+            snappedPos.z = attachPoint.position.z;
+            attachedObject.transform.position = snappedPos;
+
+            // 3. Khóa làm con của tay gắp tool0
             attachedObject.transform.SetParent(attachPoint, true);
             isHolding = true;
 
@@ -411,8 +421,10 @@ public class GripperController : MonoBehaviour
         if (rb != null)
         {
             rb.isKinematic = false;
-            rb.velocity = Vector3.zero;
+            rb.velocity = Vector3.down * 0.15f;
             rb.angularVelocity = Vector3.zero;
+            // Mở khóa constraints để rơi tự nhiên vào thùng phân loại
+            rb.constraints = RigidbodyConstraints.None;
             rb.WakeUp();
         }
 
