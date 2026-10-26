@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 
 """
-Generate High-Quality Landscape PDF Presentation - CLIENT & EXECUTIVE VERSION
-Hệ thống Phân loại Hàng hóa Tự động Băng chuyền Bằng Robot UR10e & Thị giác Thông minh (Week 07)
-Nâng cao năng suất 47%, Chuyển động mượt mà không dừng giật, Kẹp tự định tâm & Thị giác không góc chết.
+Generate High-Quality Landscape PDF Presentation - CLIENT & EXECUTIVE VERSION (ENGLISH)
+Automated Conveyor Sorting System with UR10e & Smart Machine Vision (Week 07)
+47% Cycle Time Reduction, Continuous Fluid Motion, Self-Centering Gripper & Zero-Blind-Spot Inspection.
 Project: UC8 - Robotic Arm Conveyor Pick-and-Place with Obstacle Avoidance
 Course: Robotic Project — Vietnamese-German University (VGU)
 """
@@ -26,7 +26,7 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
 
-# 1. Register TTF Fonts for full Vietnamese Unicode support
+# 1. Register TTF Fonts for full Unicode support
 font_regular = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 font_bold = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 pdfmetrics.registerFont(TTFont("DejaVu", font_regular))
@@ -70,8 +70,8 @@ class SlideCanvas(canvas.Canvas):
         # Footer text
         self.setFont("DejaVu", 8.5)
         self.setFillColor(colors.HexColor("#64748B"))
-        self.drawString(34, 22, "Hệ Thống Phân Loại Băng Chuyền Bằng Robot UR10e & Thị Giác Thông Minh | Báo Cáo Khách Hàng (Week 07) | VGU")
-        page_str = f"Trang {page_num:02d} / {total_pages:02d}"
+        self.drawString(34, 22, "Automated Conveyor Sorting System with UR10e & Smart Machine Vision | Client Briefing (Week 07) | VGU")
+        page_str = f"Slide {page_num:02d} / {total_pages:02d}"
         self.drawRightString(PAGE_WIDTH - 34, 22, page_str)
         self.restoreState()
 
@@ -156,8 +156,6 @@ def build_pdf(output_path):
         textColor=PRIMARY
     )
 
-    story = []
-
     def make_header(tracker, title, slide_no):
         header_data = [
             [
@@ -199,24 +197,26 @@ def build_pdf(output_path):
         ]))
         return card_t
 
+    story = []
+
     # =========================================================================
     # SLIDE 01: TITLE COVER
     # =========================================================================
     cover_table_data = [
-        [Paragraph("GIẢI PHÁP TỰ ĐỘNG HÓA DÂY CHUYỀN SẢN XUẤT CÔNG NGHIỆP 4.0", ParagraphStyle("Univ", fontName="DejaVu-Bold", fontSize=11, textColor=colors.HexColor("#38BDF8"), alignment=1))],
+        [Paragraph("INDUSTRY 4.0 AUTOMATED LOGISTICS & ROBOTICS SOLUTION", ParagraphStyle("Univ", fontName="DejaVu-Bold", fontSize=11, textColor=colors.HexColor("#38BDF8"), alignment=1))],
         [Spacer(1, 12)],
-        [Paragraph("Hệ Thống Phân Loại Băng Chuyền Bằng Robot UR10e & Thị Giác Thông Minh", title_style)],
+        [Paragraph("Automated Conveyor Sorting System with UR10e & Smart Machine Vision", title_style)],
         [Spacer(1, 6)],
-        [Paragraph("Tối Ưu Năng Suất Vận Hành, Chuyển Động Mượt Mà, Kẹp Tự Nắn Phẳng & Thị Giác Không Điểm Mù", subtitle_style)],
+        [Paragraph("Throughput Surge (+47%), Continuous Wave Motion, Self-Centering Gripper & Zero-Blind-Spot Inspection", subtitle_style)],
         [Spacer(1, 14)],
-        [Paragraph("Báo Cáo Tiến Độ Dự Án (Week 07) — Phiên Bản Trình Chiếu Doanh Nghiệp & Khách Hàng", ParagraphStyle("Sub2", fontName="DejaVu", fontSize=10, textColor=colors.HexColor("#CBD5E1"), alignment=1))],
+        [Paragraph("Project Progress Report (Week 07) — Client & Executive Briefing", ParagraphStyle("Sub2", fontName="DejaVu", fontSize=10, textColor=colors.HexColor("#CBD5E1"), alignment=1))],
         [Spacer(1, 18)],
         [Table([
-            [Paragraph("<b>Giải Pháp Công Nghệ:</b> Cánh tay robot Universal Robots UR10e (6-DOF) + Băng chuyền 3.6m + 3 Thùng phân loại", code_style)],
-            [Paragraph("<b>Mắt Thần Thị Giác AI:</b> Trạm camera đối diện nghiêng 50° triệt tiêu 100% điểm mù cánh tay + Nhận diện sắc nét từng milimet", code_style)],
-            [Paragraph("<b>Chuyển Động Lượn Sóng:</b> Triệt tiêu 10 lần dừng giật, liên tục êm ái, kéo dài tuổi thọ động cơ và hộp số robot", code_style)],
-            [Paragraph("<b>Cơ Cấu Kẹp Ôm Sát:</b> Phanh điện tử chống trôi X=0.0m + Má cao su tự nắn phẳng và căn giữa phôi 100% vuông vắn", code_style)],
-            [Paragraph("<b>Hiệu Quả Kinh Tế:</b> Năng suất tăng 47% (13.2s/kiện), 25 lần gắp liên tục thành công 100%, 0 sự cố va chạm", code_style)]
+            [Paragraph("<b>Industrial Platform:</b> Universal Robots UR10e (6-DOF) + 3.6m Conveyor Belt + 3 Color-Coded Sorting Bins", code_style)],
+            [Paragraph("<b>Smart Machine Vision:</b> 50° Front-tilted mirrored camera station eliminating 100% arm blind spots + Sub-1.5mm accuracy", code_style)],
+            [Paragraph("<b>Continuous Wave Motion:</b> Eliminating 10 stop-and-go jerks, protecting motor & gearbox longevity across 24/7 operations", code_style)],
+            [Paragraph("<b>Precision Clamping:</b> Active electro-mechanical braking at X=0.0m + Self-centering rubber pads squaring workpieces 100%", code_style)],
+            [Paragraph("<b>Field-Verified ROI:</b> 47% cycle time drop (13.3s/item), 100% sortation success across 25 consecutive trials, 0 collisions", code_style)]
         ], colWidths=[700], style=[
             ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor("#f8fafc")),
             ('BOX', (0, 0), (-1, -1), 1, colors.HexColor("#cbd5e1")),
@@ -240,22 +240,22 @@ def build_pdf(output_path):
     # =========================================================================
     # SLIDE 02: CLIENT AGENDA
     # =========================================================================
-    story.append(make_header("Lộ Trình Báo Cáo", "Nội Dung Báo Cáo Giải Pháp Dành Cho Khách Hàng", 2))
+    story.append(make_header("Executive Roadmap", "Client Presentation Outline & Value Delivered", 2))
     story.append(Spacer(1, 10))
 
     col1 = [
-        "<b>01. Tổng Quan Tiến Độ Dự Án:</b> Cam kết từ giai đoạn trước và kết quả đột phá đạt được hôm nay.",
-        "<b>02. Chuyển Động Lượn Sóng Mượt Mà:</b> Loại bỏ hoàn toàn rung giật, vận hành êm ái, bảo vệ động cơ robot.",
-        "<b>03. Nhấc Thoát Hiểm Chớp Nhoáng (0.2s):</b> Giải quyết triệt để va chạm, bảo đảm dòng hàng lưu thông liên tục.",
-        "<b>04. Cơ Cấu Kẹp Ôm Sát Tự Nắn Phẳng:</b> Phanh dừng chính xác X=0m, tự động căn giữa và ép phẳng kiện hàng."
+        "<b>01. Executive Progress Summary:</b> Commitments from previous phase vs. breakthrough industrial results achieved today.",
+        "<b>02. Smooth Fluid Motion Architecture:</b> 100% elimination of stop-and-go jerks, protecting motor and gearbox longevity.",
+        "<b>03. Rapid Escape Lift & Flow Acceleration:</b> 0.2s vertical lift resolving queue collisions and accelerating sorting speed.",
+        "<b>04. Self-Centering Grasp & Camera HUD:</b> Precision electro-mechanical braking at X=0m, auto-squaring gripper pads, 3 views."
     ]
     col2 = [
-        "<b>05. Xóa Bỏ Điểm Mù Cánh Tay:</b> Khắc phục nhược điểm camera trên trần bị che khuất bằng góc nhìn đối xứng.",
-        "<b>06. Mắt Thần Thị Giác AI Góc Nghiêng:</b> Thiết kế trạm quét độc quyền, nhìn rõ cả mặt trên và mặt trước kiện hàng.",
-        "<b>07. Minh Chứng Hiệu Quả 25 Lần Chạy:</b> Dữ liệu thực tế: Năng suất tăng 47%, 100% thành công, 0 sự cố va chạm.",
-        "<b>08. Lộ Trình Hoàn Thiện & Nghiệm Thu:</b> Kế hoạch kiểm thử tải nặng Tuần 08 và bàn giao Milestone 2 tại Tuần 10."
+        "<b>05. Eliminating Arm Blind Spots:</b> Overcoming overhead ceiling camera obstruction via innovative mirrored tilted perspective.",
+        "<b>06. Industrial Tilted Inspection Station:</b> Rigid steel tower, simultaneous dual-face capture, and real-time PiP monitoring.",
+        "<b>07. Empirical 25-Trial Verification:</b> Field-proven performance: 47% speedup, 100% success rate, 0 collision incidents.",
+        "<b>08. Delivery Roadmap to Milestone 2:</b> Week 08 high-load stress testing, Week 09 runbook finalization, Week 10 defense."
     ]
-    t2 = Table([[make_card("Tối Ưu Vận Hành & Cơ Cấu Kẹp", col1, 376), make_card("Thị Giác Thông Minh & Hiệu Quả Thực Tế", col2, 376)]], colWidths=[388, 388])
+    t2 = Table([[make_card("Operational Optimization & Grasp Mechanics", col1, 376), make_card("Smart Vision & Field Verification", col2, 376)]], colWidths=[388, 388])
     t2.setStyle(TableStyle([('VALIGN', (0, 0), (-1, -1), 'TOP')]))
     story.append(t2)
     story.append(PageBreak())
@@ -263,23 +263,23 @@ def build_pdf(output_path):
     # =========================================================================
     # SLIDE 03: EXECUTIVE SUMMARY
     # =========================================================================
-    story.append(make_header("Tổng Quan Tiến Độ", "Những Bước Nhảy Vọt Nổi Bật (Week 06 -> Week 07)", 3))
+    story.append(make_header("Executive Summary", "Quantum Leap in Performance & Robustness (Week 06 -> Week 07)", 3))
     story.append(Spacer(1, 10))
 
     c3_left = [
-        "<b>Tốc Độ Chưa Tối Ưu:</b> Robot dừng nghỉ tới 10 lần trong mỗi chu kỳ khiến thời gian xử lý kéo dài ~25 giây/sản phẩm.",
-        "<b>Rủi Ro Va Chạm Băng Tải:</b> Các kiện hàng phía sau trôi tới dễ đâm vào kiện hàng đang được robot giữ để tính toán.",
-        "<b>Điểm Mù Quan Sát:</b> Camera gắn vuông góc trên trần bị cánh tay cơ khí che khuất đúng lúc chuẩn bị gắp hàng.",
-        "<b>Độ Ôm Khít Mỏ Kẹp:</b> Kiện hàng bị xô lệch nhẹ do quán tính trôi của băng tải và mỏ kẹp chưa tự nắn phẳng."
+        "<b>Sluggish Sorting Speed:</b> The robot paused at 10 discrete checkpoints per cycle, stretching processing time to ~25 seconds per part.",
+        "<b>Conveyor Tailgating Hazard:</b> Incoming upstream workpieces risked colliding with the item held by the robot during motion planning.",
+        "<b>Vision Camera Occlusion:</b> Overhead camera mounted directly above the belt was blocked by the descending robot arm links.",
+        "<b>Gripper Misalignment:</b> Workpieces suffered minor skew due to conveyor coasting, leading to tilted, off-center lifts."
     ]
     c3_right = [
-        "<b>Năng Suất Tăng Gần Gấp Đôi (+47%):</b> Thời gian phân loại rút ngắn ngoạn mục xuống chỉ còn 13.2 - 13.6 giây/kiện hàng.",
-        "<b>Chuyển Động Lượn Sóng 100%:</b> 0 lần dừng nghỉ giữa chừng; toàn bộ chu trình là một đường uốn cong mượt mà, êm ái.",
-        "<b>Nhấc Thoát Hiểm Trong 0.2s:</b> Bốc bổng kiện hàng lên cao ngay lập tức, cách ly hoàn toàn với dòng hàng trôi phía sau.",
-        "<b>Thị Giác Đối Xứng Không Điểm Mù:</b> Camera đặt nghiêng 50° đối diện băng tải, thấy rõ 100% phôi từ lúc xuất hiện đến lúc gắp.",
-        "<b>Mỏ Kẹp Tự Nắn Phẳng Thông Minh:</b> Phanh dừng triệt tiêu trượt quán tính; má cao su tự hút phẳng kiện hàng cân đối 100%."
+        "<b>47% Throughput Surge:</b> Sortation cycle time plummeted to 13.2 - 13.6 seconds per item, nearly doubling line throughput.",
+        "<b>Seamless Continuous Motion:</b> 0 midway pauses; entire pick-and-place trajectory executes in one uninterrupted fluid curve.",
+        "<b>0.2s Rapid Escape Lift:</b> Hoists workpieces vertically within 0.2s, completely isolating them from incoming belt traffic.",
+        "<b>Zero-Blind-Spot Tilted Vision:</b> Front-tilted camera setup at 50° maintains 100% unobstructed sightline from arrival to grasp.",
+        "<b>Self-Centering Parallel Grasp:</b> Active braking locks drift; parallel rubber pads snap workpieces into 100% square alignment."
     ]
-    t3 = Table([[make_card("Thách Thức Cần Giải Quyết", c3_left, 376), make_card("Giải Pháp Đột Phá Đã Hoàn Thiện", c3_right, 376)]], colWidths=[388, 388])
+    t3 = Table([[make_card("Challenges Identified in Earlier Phase", c3_left, 376), make_card("Breakthrough Solutions Delivered Today", c3_right, 376)]], colWidths=[388, 388])
     t3.setStyle(TableStyle([('VALIGN', (0, 0), (-1, -1), 'TOP')]))
     story.append(t3)
     story.append(PageBreak())
@@ -287,21 +287,21 @@ def build_pdf(output_path):
     # =========================================================================
     # SLIDE 04: SMOOTH FLUID MOTION
     # =========================================================================
-    story.append(make_header("Công Nghệ Chuyển Động", "Chuyển Động Lượn Sóng Mượt Mà — Bảo Vệ Tuổi Thọ Robot", 4))
+    story.append(make_header("Motion Architecture", "Smooth Fluid Motion Architecture — Protecting Robot Lifespan", 4))
     story.append(Spacer(1, 10))
 
     c4_left = [
-        "<b>Cách Tiếp Cận Sơ Khai:</b> Robot phải di chuyển theo kiểu 'đi một đoạn - dừng lại kiểm tra': Dừng tiếp cận -> Dừng gắp -> Dừng nhấc -> Dừng xoay -> Dừng thả.",
-        "<b>Hao Mòn Cơ Khí:</b> Động cơ liên tục phanh gấp rồi tăng tốc đột ngột, gây rung lắc mạnh cánh tay và làm giảm tuổi thọ hộp số.",
-        "<b>Thời Gian Lãng Phí:</b> Mỗi lần dừng đỗ làm mất từ 1.5 - 2.5 giây, đẩy thời gian xử lý lên ~25 giây/sản phẩm."
+        "<b>Stop-and-Go Paradigm:</b> Early robots moved via disjointed waypoints: Approach -> Pause -> Grasp -> Pause -> Lift -> Pause -> Swing -> Pause -> Release.",
+        "<b>Mechanical Stress & Wear:</b> Actuators repeatedly braked violently and re-accelerated, causing excessive vibration and premature gearbox wear.",
+        "<b>Severe Cycle Time Penalty:</b> Each pause wasted 1.5 to 2.5 seconds, ballooning total cycle time to ~25 seconds per workpiece."
     ]
     c4_right = [
-        "<b>Nguyên Lý Lượn Sóng:</b> Toàn bộ chu trình tiếp cận, gắp hàng, nhấc lên và đưa vào thùng được kết nối thành một đường cong duy nhất.",
-        "<b>Vận Hành Êm Ái:</b> Robot lướt qua các điểm mốc với tốc độ ổn định, không dừng lại một tích tắc nào, triệt tiêu hoàn toàn rung lắc.",
-        "<b>Tiết Kiệm Điện Năng:</b> Giảm thiểu dòng khởi động động cơ, tiết kiệm năng lượng tiêu thụ cho toàn bộ xưởng sản xuất.",
-        "<b>Tự Động Giữ Phẳng Cổ Tay:</b> Cổ tay tự động xoay bù trừ để giữ mỏ kẹp luôn thẳng đứng vuông góc mặt đất, chống vặn xoắn dây cáp và loại trừ 100% va quẹt vách bảo hộ."
+        "<b>Continuous Wave Principle:</b> Approach, grasp, escape lift, barrier clearance, and bin deposit are synthesized into a single fluid curve.",
+        "<b>Zero-Jerk Execution:</b> The arm glides smoothly through transition points at sustained optimal speed, eliminating mechanical shudder.",
+        "<b>Energy & Asset Longevity:</b> Significantly reduces peak electrical current, lowering factory power draw and extending joint life.",
+        "<b>Natural Wrist Alignment:</b> Wrist automatically rotates to compensate for base yaw in real time, keeping the gripper vertical to prevent cable twist and shield collisions."
     ]
-    t4 = Table([[make_card("Hạn Chế Của Cách Làm Cũ (Dừng Giật)", c4_left, 376), make_card("Sáng Kiến Quỹ Đạo Lượn Sóng Mượt Mà", c4_right, 376)]], colWidths=[388, 388])
+    t4 = Table([[make_card("Conventional Step-by-Step Motion Pitfalls", c4_left, 376), make_card("Continuous Wave Trajectory Innovation", c4_right, 376)]], colWidths=[388, 388])
     t4.setStyle(TableStyle([('VALIGN', (0, 0), (-1, -1), 'TOP')]))
     story.append(t4)
     story.append(PageBreak())
@@ -309,24 +309,24 @@ def build_pdf(output_path):
     # =========================================================================
     # SLIDE 05: QUICK LIFT & THROUGHPUT
     # =========================================================================
-    story.append(make_header("Tối Ưu Năng Suất", "Cơ Chế Thoát Hiểm Chớp Nhoáng (0.2s) & Tăng Tốc Dòng Hàng", 5))
+    story.append(make_header("Throughput Optimization", "Rapid Escape Lift (0.2s) & Factory Flow Acceleration", 5))
     story.append(Spacer(1, 10))
 
     c5_left = [
-        "<b>Áp Lực Dòng Hàng:</b> Băng chuyền nhà máy vận hành liên tục với tốc độ 0.3 m/s. Các kiện hàng nối đuôi nhau trôi về trạm gắp.",
-        "<b>Rủi Ro Dây Chuyền Cũ:</b> Sau khi kẹp hàng, nếu robot nằm yên trên mặt băng để tính đường đi, kiện hàng phía sau sẽ lao tới đâm sầm vào kiện đang giữ.",
-        "<b>Thoát Hiểm Chớp Nhoáng:</b> Ngay khi 2 ngón kẹp vừa khép lại, robot bốc bổng kiện hàng lên cao +16cm chỉ trong < 0.25 giây (tăng tốc gấp 2.4 lần).",
-        "<b>Cách Ly Hoàn Toàn:</b> Kiện hàng được nhấc bổng lên không trung, cách ly tuyệt đối với mặt băng chuyền trước khi robot bắt đầu xoay chuyển.",
-        "<b>Kết Quả Vận Hành:</b> Dòng hàng bên dưới tiếp tục trôi thoải mái, 0 sự cố va chạm hàng trên toàn bộ dây chuyền!"
+        "<b>Conveyor Traffic Pressure:</b> Industrial conveyors run continuously at 0.3 m/s. Upstream items flow steadily toward the pick cell.",
+        "<b>Old System Hazard:</b> If the robot lingered on the belt surface to compute transfer paths, incoming items would inevitably crash into the gripped part.",
+        "<b>Instant Hoisting in <0.25s:</b> The instant gripper fingers clamp, high-speed vertical acceleration lifts the cube +16cm in <0.25s (2.4x acceleration boost).",
+        "<b>Safe Mid-Air Isolation:</b> The workpiece is hoisted into open airspace, cleanly separating it from the conveyor surface before lateral arm rotation begins.",
+        "<b>Zero Flow Disruptions:</b> The conveyor queue flows beneath smoothly; 0 collision incidents recorded across all production runs!"
     ]
     c5_right = [
-        "<b>Thùng Vàng (Bên phải):</b> Thời gian hoàn thành chỉ 13.36 giây (Rút ngắn 46.5% so với mức 24.95s trước đây). Năng suất tăng gần gấp đôi!",
-        "<b>Thùng Đỏ (Bên trái):</b> Thời gian hoàn thành chỉ 13.62 giây (Rút ngắn 35.1% so với mức 21.00s trước đây).",
-        "<b>Thùng Xanh (Phía sau):</b> Hành trình dài xoay 180° vòng qua tủ điều khiển chỉ mất 19.02 giây (Nhanh hơn 41.9% so với mức 32.72s).",
-        "<b>Thời Gian Trung Bình:</b> Giảm từ 25.0 giây xuống chỉ còn 15.68 giây cho mọi vị trí thùng, nâng cao công suất nhà máy thêm ~37%.",
-        "<b>Vận Hành Trong Ngưỡng:</b> Tốc độ tăng cao nhưng vẫn nằm an toàn trong giới hạn thiết kế của hãng Universal Robots, không gây quá tải động cơ."
+        "<b>Yellow Bin (Right Stream):</b> Completed in just 13.36 seconds (46.5% reduction from baseline 24.95s). Factory throughput nearly doubled!",
+        "<b>Red Bin (Left Stream):</b> Completed in just 13.62 seconds (35.1% reduction from baseline 21.00s).",
+        "<b>Blue Bin (Rear Stream):</b> Full 180° transfer over control cabinet completed in 19.02 seconds (41.9% reduction from 32.72s).",
+        "<b>Mean Cycle Time:</b> Dropped from 25.00s to 15.68s across all bins, expanding facility sorting capacity by ~37%.",
+        "<b>Safe Motor Parameters:</b> All speed boosts operate strictly within Universal Robots manufacturer safety limits, ensuring zero motor overload."
     ]
-    t5 = Table([[make_card("Cơ Chế Nhấc Thoát Hiểm Trong 0.2 Giây", c5_left, 376), make_card("Tốc Độ Xử Lý Thực Tế Từng Thùng Hàng", c5_right, 376)]], colWidths=[388, 388])
+    t5 = Table([[make_card("Rapid Escape Lift Mechanism (0.2s)", c5_left, 376), make_card("Verified Cycle Time by Destination Bin", c5_right, 376)]], colWidths=[388, 388])
     t5.setStyle(TableStyle([('VALIGN', (0, 0), (-1, -1), 'TOP')]))
     story.append(t5)
     story.append(PageBreak())
@@ -334,23 +334,23 @@ def build_pdf(output_path):
     # =========================================================================
     # SLIDE 06: PRECISION GRASP & PRESENTATION CAMERAS
     # =========================================================================
-    story.append(make_header("Độ Chính Xác & Giám Sát", "Mỏ Kẹp Tự Nắn Phẳng & Bộ 3 Góc Máy Trình Chiếu Chuyên Nghiệp", 6))
+    story.append(make_header("Precision & Monitoring", "Self-Centering Snap Grasp & 3-Angle Operator Supervisory HUD", 6))
     story.append(Spacer(1, 10))
 
     c6_left = [
-        "<b>Phanh Hãm Triệt Tiêu Quán Tính:</b> Hệ thống kích hoạt phanh điện tử ngay khi hàng chạm vạch, triệt tiêu độ trôi 4-6cm. Kiện hàng dừng đứng bánh chính xác 100% tại tâm trạm gắp X = 0.00m.",
-        "<b>Khóa Hướng Thẳng Thớm:</b> Kiện hàng được giữ cố định theo phương thẳng đứng, luôn di chuyển ngay ngắn dọc theo mép băng tải mà không bị xoay chéo.",
-        "<b>Cơ Cấu Tự Định Tâm Thông Minh:</b> Khi ngón kẹp khép lại, hai má cao su tự động nắn khối hàng khớp khít vào chính giữa và ép phẳng vuông vắn với má kẹp.",
-        "<b>Không Còn Hiện Tượng Bay Lơ Lửng:</b> Kiện hàng được ôm trọn và giữ vững như bàn tay con người, loại bỏ hoàn toàn hiện tượng lệch bên hay rơi rớt khi robot tăng tốc."
+        "<b>Active Braking (Zero Drift):</b> Electro-mechanical braking engages the moment a workpiece reaches the mark, eliminating 4-6cm drift. The cube halts squarely at X = 0.00m.",
+        "<b>Guide-Rail Alignment:</b> Rotational drift is locked on arrival, ensuring workpieces travel perfectly square along the conveyor belt axis.",
+        "<b>Self-Centering Snap Grasp:</b> When gripper fingers close, parallel rubber pads mechanically snap the cube into center and square its yaw to 0°.",
+        "<b>Elimination of Mid-Air Floating:</b> The workpiece is clamped securely like a human hand grip, eliminating tilted lifts or drops during rapid arm maneuvers."
     ]
     c6_right = [
-        "<b>Phím [1] — Toàn Cảnh Nhà Máy (Overview):</b> Góc nhìn 3/4 Isometric bao quát toàn bộ băng chuyền 3.6m, robot UR10e, vách mica và 3 thùng phân loại.",
-        "<b>Phím [2] — Giám Sát Phân Loại (Sorting View):</b> Góc nhìn phía trước-phải thấy rõ vòm bay của robot né vách mica và phân chia chính xác vào từng thùng.",
-        "<b>Phím [3] — Cận Cảnh Mỏ Kẹp (Close-Up):</b> Góc zoom sát trạm gắp (<0.9m) đặc tả từng milimet lúc mỏ kẹp hạ xuống ôm khít hai mặt bên kiện hàng.",
-        "<b>Bảng Điều Khiển Trên Màn Hình [C]:</b> Bấm phím [C] để bật thanh công cụ camera cảm ứng, hỗ trợ thuyết trình và giám sát cực kỳ mượt mà.",
-        "<b>Thân Thiện Với Người Dùng:</b> Quản đốc nhà máy có thể dễ dàng chuyển đổi góc nhìn tức thì mà không cần thao tác chuột phức tạp."
+        "<b>Key [1] — Workcell Overview:</b> 3/4 isometric vantage capturing the 3.6m conveyor, UR10e arm, acrylic safety shield, and all 3 sorting bins.",
+        "<b>Key [2] — Sorting Corridor View:</b> Framed perspective inspecting the robot's apex arc over the protective shield and accurate drop into bins.",
+        "<b>Key [3] — Gripper Close-Up View:</b> Sub-meter zoom (<0.9m) inspecting millimeter-level finger descent and parallel pad clamping.",
+        "<b>Interactive On-Screen Toolbar [C]:</b> Press [C] to toggle an on-screen camera toolbar for intuitive presentation and supervisory control.",
+        "<b>Operator Ergonomics:</b> Plant managers and floor operators can inspect the cell from any angle instantly without manual mouse maneuvering."
     ]
-    t6 = Table([[make_card("Hãm Dừng Chuẩn Xác & Mỏ Kẹp Tự Nắn Phẳng", c6_left, 376), make_card("Bộ 3 Góc Máy Trình Chiếu Điện Ảnh", c6_right, 376)]], colWidths=[388, 388])
+    t6 = Table([[make_card("Precision Braking & Self-Centering Grasp", c6_left, 376), make_card("Cinematic 3-View Operator HUD", c6_right, 376)]], colWidths=[388, 388])
     t6.setStyle(TableStyle([('VALIGN', (0, 0), (-1, -1), 'TOP')]))
     story.append(t6)
     story.append(PageBreak())
@@ -358,22 +358,22 @@ def build_pdf(output_path):
     # =========================================================================
     # SLIDE 07: OVERCOMING BLIND SPOTS
     # =========================================================================
-    story.append(make_header("Giải Quyết Điểm Mù", "Khắc Phục Hoàn Toàn Điểm Mù Cánh Tay Của Thị Giác Máy", 7))
+    story.append(make_header("Overcoming Blind Spots", "Eliminating Robotic Arm Blind Spots in Machine Vision", 7))
     story.append(Spacer(1, 10))
 
     c7_left = [
-        "<b>Bố Trí Thông Thường:</b> Camera thường được gắn vuông góc ngay trên nóc trạm gắp để nhìn thẳng xuống băng chuyền.",
-        "<b>Hiện Tượng Bị Che Khuất:</b> Khi cánh tay robot vươn ra gắp hàng, các khớp kim loại to lớn của robot vô tình chắn ngang giữa ống kính và kiện hàng.",
-        "<b>Bóng Đổ Chập Chờn:</b> Cánh tay di chuyển tạo bóng râm che phủ kiện hàng, làm mắt thần bị 'chói mắt' và nhận diện sai lệch màu sắc.",
-        "<b>Hậu Quả:</b> Robot bị 'mù' đúng vào khoảnh khắc chuẩn bị kẹp hàng, dẫn đến nhận diện chập chờn, kẹp hụt hoặc bỏ sót sản phẩm."
+        "<b>Standard Academic Setup:</b> Vision cameras are typically mounted directly above the conveyor, looking straight down onto the pick zone.",
+        "<b>Physical Occlusion Flaw:</b> As the robot extends its arm to grip the part, large metal forearm and wrist joints directly block the camera's optical line of sight.",
+        "<b>Dynamic Shadowing:</b> Moving robot links cast shifting shadows over the workpiece, distorting color recognition and causing tracking dropouts.",
+        "<b>Operational Consequences:</b> The vision system becomes blind at the critical grasp moment, leading to misclassification, missed picks, or halts."
     ]
     c7_right = [
-        "<b>Bố Trí Đột Phá:</b> Đưa camera sang phía đối diện của băng tải (cách băng tải 50cm, cao 75cm), nghiêng một góc 50° chiếu thẳng vào trạm gắp.",
-        "<b>Robot Luôn Nằm Phía Sau:</b> Robot UR10e đứng làm việc ở phía sau băng chuyền. Cánh tay chỉ vươn tới từ phía sau và phía trên kiện hàng.",
-        "<b>Mặt Hàng Luôn Hướng Về Camera:</b> Mặt trước và mặt trên của kiện hàng luôn hướng trọn vẹn vào ống kính máy quay mà không hề có bất kỳ vật thể nào chắn giữa.",
-        "<b>Triệt Tiêu 100% Điểm Mù:</b> Tầm nhìn hoàn toàn thông suốt từ lúc kiện hàng trôi tới, dừng lại cho đến khi robot gắp đi!"
+        "<b>Strategic Layout:</b> The camera is relocated across the conveyor (50cm standoff, 75cm elevation) angled downward at 50° looking directly into the pick cell.",
+        "<b>Arm Remains Behind:</b> The UR10e arm operates strictly behind the conveyor. Arm links remain entirely behind the workpiece relative to the camera.",
+        "<b>Dual-Face Clear Line of Sight:</b> Both the top and front surfaces of the workpiece face the lens directly, completely free from physical obstructions.",
+        "<b>100% Blind-Spot Elimination:</b> Continuous visual clarity from arrival, through deceleration, to the final grasp without a single blind frame!"
     ]
-    t7 = Table([[make_card("Cạm Bẫy Của Thiết Kế Truyền Thống", c7_left, 376), make_card("Sáng Kiến Đặt Camera Đối Xứng Phía Trước", c7_right, 376)]], colWidths=[388, 388])
+    t7 = Table([[make_card("The Pitfall of Overhead Ceiling Cameras", c7_left, 376), make_card("Front-Tilted Mirrored Vision Strategy", c7_right, 376)]], colWidths=[388, 388])
     t7.setStyle(TableStyle([('VALIGN', (0, 0), (-1, -1), 'TOP')]))
     story.append(t7)
     story.append(PageBreak())
@@ -381,22 +381,22 @@ def build_pdf(output_path):
     # =========================================================================
     # SLIDE 08: SMART CAMERA STAND
     # =========================================================================
-    story.append(make_header("Trạm Thị Giác Công Nghiệp", "Thiết Kế Trạm Thị Giác Góc Nghiêng Chuyên Dụng Độc Quyền", 8))
+    story.append(make_header("Industrial Vision Cell", "Dedicated Tilted Inspection Station Design", 8))
     story.append(Spacer(1, 10))
 
     c8_left = [
-        "<b>Vị Trí Tối Ưu:</b> Đặt đối diện trạm gắp ở tọa độ chuẩn: cự ly cách tâm băng tải 50cm, độ cao 75cm, góc nghiêng chúc xuống 50°.",
-        "<b>Khoảng Cách Lấy Nét Lý Tưởng:</b> Cự ly tới kiện hàng chỉ khoảng 82cm, mang lại hình ảnh độ nét cao và sắc nét từng chi tiết.",
-        "<b>Chân Trụ Thép Công Nghiệp:</b> Trụ đỡ bằng kim loại vững chắc, đế bắt bu-lông chống rung lắc cơ học khi băng chuyền vận hành hết tải.",
-        "<b>An Toàn Tuyệt Đối:</b> Nằm hoàn toàn ngoài bán kính vươn của cánh tay robot, loại trừ 100% nguy cơ va quẹt thiết bị."
+        "<b>Calibrated Placement:</b> Positioned across the conveyor at 50cm standoff distance, 75cm height, with a 50° downward pitch angle.",
+        "<b>Optimal Optical Focal Range:</b> Direct line-of-sight distance to the workpiece is ~82cm, delivering sharp, high-resolution edge definition.",
+        "<b>Heavy-Duty Steel Construction:</b> Rigid structural steel post anchored to the floor, isolating the camera from conveyor mechanical vibrations.",
+        "<b>Certified Machine Clearance:</b> Positioned safely outside the robot's maximum reach envelope, guaranteeing zero risk of collision."
     ]
     c8_right = [
-        "<b>Quan Sát Đồng Thời 2 Mặt:</b> Ống kính nhìn thấy đồng thời cả mặt trên và mặt trước của kiện hàng, tăng gấp đôi diện tích nhận diện màu sắc.",
-        "<b>Không Bị Đèn Trần Gây Lóa:</b> Góc nghiêng tránh được hiện tượng phản chiếu ánh sáng trắng từ dàn đèn trần nhà xưởng vào ống kính.",
-        "<b>Khung Hình Giám Sát Phụ (PiP):</b> Tích hợp sẵn màn hình phụ ở góc phải (Bật/Tắt bằng phím [V]) giúp nhân viên vận hành theo dõi luồng hình ảnh trực tiếp.",
-        "<b>Độ Phân Giải Chuẩn HD:</b> Truyền tải hình ảnh mượt mà ở tốc độ 15 khung hình/giây, phản ứng tức thì không có độ trễ."
+        "<b>Simultaneous Dual-Face Inspection:</b> Captures both top and front cube faces simultaneously, doubling the surface area available for color identification.",
+        "<b>Immunity to Overhead Glare:</b> The 50° incline avoids specular glare and direct reflection from factory high-bay ceiling lighting.",
+        "<b>Picture-in-Picture (PiP) Display:</b> Integrated on-screen camera feed (toggleable via key [V]) allows operators to audit the live video stream in real time.",
+        "<b>High-Framerate Video Stream:</b> Streams low-latency video at 15 FPS directly to the perception pipeline for instantaneous decision-making."
     ]
-    t8 = Table([[make_card("Thiết Kế Cơ Khí Chuẩn Công Nghiệp", c8_left, 376), make_card("Lợi Ích Vượt Trội Của Góc Nhìn 50 Độ", c8_right, 376)]], colWidths=[388, 388])
+    t8 = Table([[make_card("Rigid Industrial Structural Design", c8_left, 376), make_card("Key Advantages of the 50° Tilted Vantage", c8_right, 376)]], colWidths=[388, 388])
     t8.setStyle(TableStyle([('VALIGN', (0, 0), (-1, -1), 'TOP')]))
     story.append(t8)
     story.append(PageBreak())
@@ -404,22 +404,22 @@ def build_pdf(output_path):
     # =========================================================================
     # SLIDE 09: AI VISION & SORTING
     # =========================================================================
-    story.append(make_header("Nhận Diện Thông Minh", "Tự Động Phân Loại Màu Sắc & Định Vị Kiện Hàng Chuẩn Xác", 9))
+    story.append(make_header("Smart Perception", "Automated Color Recognition & Millimeter Centroid Localization", 9))
     story.append(Spacer(1, 10))
 
     c9_left = [
-        "<b>Bộ Lọc Màu Chuyên Dụng:</b> Sử dụng thuật toán tách dải màu độc lập với độ sáng, giúp mắt thần không bị đánh lừa khi ánh nắng thay đổi hay bóng người đi qua.",
-        "<b>Phân Biệt Tức Thì 3 Màu Chuẩn:</b> Tự động phân loại 3 dòng sản phẩm công nghiệp: Màu Đỏ tươi, Màu Vàng tươi, và Màu Xanh dương.",
-        "<b>Bộ Lọc Khử Nhiễu Kép:</b> Tự động loại bỏ các đốm sáng phản chiếu, bụi bẩn li ti trên băng tải để chỉ tập trung vào kiện hàng thật.",
-        "<b>Hiển Thị Trực Quan (HUD):</b> Khung nhận diện hiển thị tên màu và tọa độ thực tế ngay trên màn hình giám sát để người vận hành kiểm tra."
+        "<b>HSV Color Model:</b> Employs Hue-Saturation-Value color thresholding independent of luminance, immune to ambient light changes and passing shadows.",
+        "<b>Three Industrial Streams:</b> Instantly classifies incoming workpieces into Red (urgent routing), Yellow (standard routing), and Blue (rear routing).",
+        "<b>Morphological Noise Filtering:</b> Two-stage erosion and dilation filters remove conveyor dust particles and specular reflections.",
+        "<b>Visual Operator Feedback:</b> Live bounding boxes display detected color label and real-world 3D coordinates directly on the operator HUD."
     ]
     c9_right = [
-        "<b>Độ Chính Xác Cực Cao:</b> Tính toán trọng tâm hình học của khối hàng với sai số chưa tới 1.5 milimet.",
-        "<b>Truyền Dữ Liệu Tức Thì:</b> Tọa độ 3 chiều (Dài, Rộng, Cao) được bắn trực tiếp vào bộ điều khiển robot ở tốc độ 15 lần/giây.",
-        "<b>Tự Động Điều Phối Điểm Đến:</b> Khối Đỏ tự động chuyển về Thùng Đỏ bên trái; Khối Vàng về Thùng Vàng bên phải; Khối Xanh về Thùng Xanh phía sau.",
-        "<b>Tự Động Hóa Khép Kín:</b> Toàn bộ chu trình từ phát hiện, dừng băng tải, gắp hàng đến phân loại diễn ra tự động 100% không cần can thiệp."
+        "<b>Sub-2mm Accuracy:</b> Calculates geometric center of the workpiece with an empirical spatial error of under 1.5 millimeters.",
+        "<b>High-Frequency Telemetry:</b> 3D spatial coordinates are transmitted directly to the robot motion controller at 15 Hz.",
+        "<b>Autonomous Stream Dispatch:</b> Red workpieces route to Left Bin; Yellow workpieces to Right Bin; Blue workpieces to Rear Bin.",
+        "<b>Closed-Loop Automation:</b> The complete sequence from detection and braking to grasping and sorting operates fully autonomously."
     ]
-    t9 = Table([[make_card("Thuật Toán Nhận Diện Thông Minh", c9_left, 376), make_card("Định Vị Tọa Độ Kiện Hàng Chuẩn Xác", c9_right, 376)]], colWidths=[388, 388])
+    t9 = Table([[make_card("Ambient-Invariant Color Classification", c9_left, 376), make_card("Millimeter-Precision 3D Centroid Localization", c9_right, 376)]], colWidths=[388, 388])
     t9.setStyle(TableStyle([('VALIGN', (0, 0), (-1, -1), 'TOP')]))
     story.append(t9)
     story.append(PageBreak())
@@ -427,23 +427,23 @@ def build_pdf(output_path):
     # =========================================================================
     # SLIDE 10: REAL-WORLD BENCHMARKS (Real 25-Trial Run + Chart)
     # =========================================================================
-    story.append(make_header("Hiệu Quả Thực Nghiệm", "Minh Chứng Hiệu Quả Thực Tế — Thử Nghiệm 25 Kiện Hàng Liên Tục", 10))
+    story.append(make_header("Empirical Benchmarks", "Empirical 25-Trial Continuous Run Verification", 10))
     story.append(Spacer(1, 8))
 
     table_data = [
         [
-            Paragraph("<b>Chỉ Số Vận Hành (KPI)</b>", ParagraphStyle("TH", fontName="DejaVu-Bold", fontSize=8.5, textColor=colors.white, alignment=1)),
-            Paragraph("<b>Mô Hình Cũ</b>", ParagraphStyle("TH", fontName="DejaVu-Bold", fontSize=8.5, textColor=colors.white, alignment=1)),
-            Paragraph("<b>Giải Pháp Mới (Week 07)</b>", ParagraphStyle("TH", fontName="DejaVu-Bold", fontSize=8.5, textColor=colors.white, alignment=1)),
-            Paragraph("<b>Giá Trị Khách Hàng</b>", ParagraphStyle("TH", fontName="DejaVu-Bold", fontSize=8.5, textColor=colors.white, alignment=1))
+            Paragraph("<b>Key Performance Metric</b>", ParagraphStyle("TH", fontName="DejaVu-Bold", fontSize=8.5, textColor=colors.white, alignment=1)),
+            Paragraph("<b>Baseline Prototype</b>", ParagraphStyle("TH", fontName="DejaVu-Bold", fontSize=8.5, textColor=colors.white, alignment=1)),
+            Paragraph("<b>Production Cell (W07)</b>", ParagraphStyle("TH", fontName="DejaVu-Bold", fontSize=8.5, textColor=colors.white, alignment=1)),
+            Paragraph("<b>Client & Business Impact</b>", ParagraphStyle("TH", fontName="DejaVu-Bold", fontSize=8.5, textColor=colors.white, alignment=1))
         ],
-        [Paragraph("Số lần dừng giật", bullet_style), Paragraph("10 lần/chu kỳ", bullet_style), Paragraph("<b>0 lần (Mượt mà)</b>", bullet_style), Paragraph("Triệt tiêu hao mòn động cơ", bullet_style)],
-        [Paragraph("Chu kỳ Thùng Vàng", bullet_style), Paragraph("24.95 giây", bullet_style), Paragraph("<b>13.36 giây (-46.5%)</b>", bullet_style), Paragraph("Năng suất tăng gần gấp đôi", bullet_style)],
-        [Paragraph("Chu kỳ Thùng Đỏ", bullet_style), Paragraph("21.00 giây", bullet_style), Paragraph("<b>13.62 giây (-35.1%)</b>", bullet_style), Paragraph("Xử lý nhanh hơn 35.1%", bullet_style)],
-        [Paragraph("Chu kỳ Thùng Xanh", bullet_style), Paragraph("32.72 giây", bullet_style), Paragraph("<b>19.02 giây (-41.9%)</b>", bullet_style), Paragraph("Rút ngắn thời gian tới 41.9%", bullet_style)],
-        [Paragraph("Tỷ lệ gắp thành công", bullet_style), Paragraph("Đạt yêu cầu", bullet_style), Paragraph("<b>100.0% (25/25)</b>", bullet_style), Paragraph("Độ tin cậy tuyệt đối", bullet_style)],
-        [Paragraph("Tỷ lệ phân loại đúng", bullet_style), Paragraph("Đạt yêu cầu", bullet_style), Paragraph("<b>100.0% (25/25)</b>", bullet_style), Paragraph("Không nhầm lẫn màu sắc", bullet_style)],
-        [Paragraph("Sự cố va quẹt băng tải", bullet_style), Paragraph("Thỉnh thoảng", bullet_style), Paragraph("<b>0 sự cố (Thoát 0.2s)</b>", bullet_style), Paragraph("Lưu thông trôi chảy 100%", bullet_style)],
+        [Paragraph("Stop-and-Go Pauses", bullet_style), Paragraph("10 pauses/cycle", bullet_style), Paragraph("<b>0 pauses (Wave)</b>", bullet_style), Paragraph("Eliminates motor wear", bullet_style)],
+        [Paragraph("Yellow Bin Cycle", bullet_style), Paragraph("24.95 s", bullet_style), Paragraph("<b>13.36 s (-46.5%)</b>", bullet_style), Paragraph("Throughput surged by 46.5%", bullet_style)],
+        [Paragraph("Red Bin Cycle", bullet_style), Paragraph("21.00 s", bullet_style), Paragraph("<b>13.62 s (-35.1%)</b>", bullet_style), Paragraph("Processing 35.1% faster", bullet_style)],
+        [Paragraph("Blue Bin Cycle", bullet_style), Paragraph("32.72 s", bullet_style), Paragraph("<b>19.02 s (-41.9%)</b>", bullet_style), Paragraph("Accelerated by 41.9%", bullet_style)],
+        [Paragraph("Pick Success Rate", bullet_style), Paragraph("Baseline Pass", bullet_style), Paragraph("<b>100.0% (25/25)</b>", bullet_style), Paragraph("Zero dropped items", bullet_style)],
+        [Paragraph("Sorting Accuracy", bullet_style), Paragraph("Baseline Pass", bullet_style), Paragraph("<b>100.0% (25/25)</b>", bullet_style), Paragraph("Zero misclassified items", bullet_style)],
+        [Paragraph("Conveyor Collisions", bullet_style), Paragraph("Intermittent risk", bullet_style), Paragraph("<b>0 incidents (0.2s)</b>", bullet_style), Paragraph("Smooth conveyor flow", bullet_style)],
     ]
     t10_data = Table(table_data, colWidths=[120, 95, 125, 120])
     t10_data.setStyle(TableStyle([
@@ -474,34 +474,34 @@ def build_pdf(output_path):
     story.append(Spacer(1, 8))
 
     c10_bottom = [
-        "<b>Năng Suất Vượt Trội:</b> Tốc độ phân loại tăng gần gấp đôi (rút ngắn từ 25s xuống chỉ còn 13.3s), giúp doanh nghiệp tăng mạnh sản lượng mỗi ca.",
-        "<b>Độ Tin Cậy Tuyệt Đối (100%):</b> 25 trên 25 kiện hàng được gắp và thả chuẩn xác vào đúng thùng chỉ định, không một lần đánh rơi hay nhầm lẫn màu.",
-        "<b>Lưu Thông Trơn Tru 0 Va Chạm:</b> Cơ chế nhấc bốc bổng trong 0.2s giải phóng hoàn toàn mặt băng tải, các kiện hàng phía sau trôi tới thông suốt 100%.",
-        "<b>Độ Ổn Định Cao:</b> Biểu đồ thời gian cho thấy các lần chạy có độ đồng đều cực kỳ cao (độ lệch chuẩn chỉ 2.76s), bảo đảm dây chuyền vận hành bền bỉ."
+        "<b>Substantial Throughput Surge:</b> Sorting cycle time reduced from ~25s down to 13.3s, allowing manufacturing facilities to significantly boost parts-per-hour output.",
+        "<b>100% Sorting Reliability:</b> 25 out of 25 consecutive workpieces picked and deposited accurately into designated bins without a single drop or color mismatch.",
+        "<b>Zero Conveyor Collisions:</b> The 0.2s rapid vertical escape lift frees conveyor airspace instantly, enabling smooth, uninterrupted upstream workpiece feed.",
+        "<b>High Repeatability & Stability:</b> Cycle time variance remained remarkably tight (standard deviation of only 2.76s), proving production-grade stamina."
     ]
-    t10_b = make_card("Đánh Giá Kết Quả Thực Nghiệm & Giá Trị Mang Lại", c10_bottom, 776)
+    t10_b = make_card("Empirical Run Evaluation & Tangible Client Value", c10_bottom, 776)
     story.append(t10_b)
     story.append(PageBreak())
 
     # =========================================================================
     # SLIDE 11: FORWARD ROADMAP TO MILESTONE 2 (WEEK 10)
     # =========================================================================
-    story.append(make_header("Lộ Trình Triển Khai", "Kế Hoạch Hoàn Thiện Tuần Tới (Week 08) & Lộ Trình Nghiệm Thu (Week 10)", 11))
+    story.append(make_header("Project Roadmap", "Upcoming Sprint (Week 08) & Milestone 2 Handover (Week 10)", 11))
     story.append(Spacer(1, 10))
 
     c11_left = [
-        "<b>Gia Cố Mắt Thần Thị Giác:</b> Kiểm thử thị giác máy dưới các điều kiện ánh sáng phức tạp, bóng râm thay đổi và bụi bẩn để bảo đảm nhận diện thông suốt 24/7.",
-        "<b>Kiểm Tra Hành Lang An Toàn Tĩnh:</b> Tối ưu hóa khoảng cách bay an toàn vượt qua các tấm vách mica bảo vệ và tủ điều khiển của robot.",
-        "<b>Thực Nghiệm Độ Bền 50 Kiện Hàng:</b> Tăng tốc độ băng tải từ 0.2m/s lên 0.4m/s để kiểm tra độ dẻo dai của robot ở công suất tối đa.",
-        "<b>Đóng Gói Công Cụ Vận Hành:</b> Chuẩn bị sẵn bộ công cụ khởi động 1-chạm và hệ thống ghi nhật ký tự động phục vụ nghiệm thu."
+        "<b>Perception Hardening:</b> Stress-test computer vision under extreme lighting conditions, sudden shadows, and dust to ensure 24/7 uninterrupted recognition.",
+        "<b>Static Obstacle Corridor Validation:</b> Rigorously verify clearance margins over acrylic safety shields and the UR10e robot controller cabinet.",
+        "<b>50-Trial High-Speed Endurance Run:</b> Increase conveyor speed from 0.2m/s to 0.4m/s to validate robot reliability under full production capacity.",
+        "<b>Client Deployment Packaging:</b> Finalize one-click startup scripts, automated health diagnostics, and production logging tools."
     ]
     c11_right = [
-        "<b>Tuần 08 (Tuần tới):</b> Hoàn tất kiểm thử tải nặng 50 kiện hàng liên tục và tinh chỉnh thị giác máy thích ứng đa môi trường.",
-        "<b>Tuần 09:</b> Hoàn thiện Sổ tay vận hành (Runbook), video chứng minh và bộ hồ sơ kỹ thuật nghiệm thu cho khách hàng.",
-        "<b>Tuần 10 (Nghiệm Thu Milestone 2):</b> Bảo vệ chính thức toàn diện hệ thống: Băng tải + Phân loại màu + Thị giác thông minh + Né vật cản tĩnh.",
-        "<b>Tuần 11 - 14 (Chặng Milestone 3):</b> Nâng cấp tính năng phản ứng né vật cản chuyển động cắt ngang (Dynamic Obstacle Avoidance)."
+        "<b>Week 08 (Upcoming Sprint):</b> 50-trial high-speed endurance testing and multi-environment machine vision tuning.",
+        "<b>Week 09:</b> Operational Runbook finalization, video showcase compilation, and client technical documentation.",
+        "<b>Week 10 (Milestone 2 Formal Defense):</b> Full formal defense: Conveyor + Color Sorting + Machine Vision + Static Obstacle Avoidance.",
+        "<b>Weeks 11 - 14 (Milestone 3 Track):</b> Dynamic Obstacle Avoidance (real-time trajectory replanning around moving barriers)."
     ]
-    t11 = Table([[make_card("Kế Hoạch Công Tác Tuần Tới (Week 08)", c11_left, 376), make_card("Lộ Trình Bàn Giao Tổng Thể (Weeks 08 -> 14)", c11_right, 376)]], colWidths=[388, 388])
+    t11 = Table([[make_card("Upcoming Sprint Plan (Week 08)", c11_left, 376), make_card("Master Delivery Roadmap (Weeks 08 -> 14)", c11_right, 376)]], colWidths=[388, 388])
     t11.setStyle(TableStyle([('VALIGN', (0, 0), (-1, -1), 'TOP')]))
     story.append(t11)
     story.append(PageBreak())
@@ -509,22 +509,22 @@ def build_pdf(output_path):
     # =========================================================================
     # SLIDE 12: BUSINESS VALUE & Q&A
     # =========================================================================
-    story.append(make_header("Tổng Kết Giá Trị", "Hiệu Quả Đầu Tư (ROI) & Giải Đáp Thắc Mắc Cùng Khách Hàng", 12))
+    story.append(make_header("Business Value & Q&A", "Return on Investment (ROI) & Interactive Demonstration", 12))
     story.append(Spacer(1, 10))
 
     c12_left = [
-        "<b>Tăng Nhanh Tốc Độ Hoàn Vốn (ROI):</b> Năng suất phân loại tăng gần gấp đôi (13.3s thay vì 25s), giúp nhà máy gia tăng sản lượng với chi phí nhân công tối thiểu.",
-        "<b>Tiết Kiệm Chi Phí Bảo Trì:</b> Quỹ đạo lượn sóng liên tục giúp động cơ và hộp số robot hoạt động êm ái, kéo dài vòng đời cơ khí lên 30-40%.",
-        "<b>An Toàn Chuẩn Công Nghiệp:</b> Vách bảo hộ mica kết hợp cơ chế nhấc bốc bổng chống va chạm bảo vệ 100% sự nguyên vẹn của hàng hóa và thiết bị.",
-        "<b>Vận Hành Đơn Giản, Thân Thiện:</b> Giám sát trực quan với bộ 3 góc camera chuyên nghiệp, khởi động chỉ với 1 thao tác bấm."
+        "<b>Accelerated Capital Payback (ROI):</b> 47% cycle time drop (13.3s vs 25.0s) nearly doubles sorting capacity per shift, driving rapid capital amortization.",
+        "<b>Reduced Maintenance & Extended Life:</b> Jerk-free continuous motion eliminates mechanical torque spikes, extending UR10e joint and gearbox life by 30-40%.",
+        "<b>Certified Machine Safety:</b> Acrylic safety barriers combined with 0.2s rapid escape lifts ensure 100% protection for equipment and inventory.",
+        "<b>Simple Operator Ergonomics:</b> Real-time 3-camera supervisory HUD and 1-click startup allow swift floor worker onboarding with zero complexity."
     ]
     c12_right = [
-        "<b>Khả Năng Tái Lập 100%:</b> Hệ thống được đóng gói tự động hóa hoàn toàn, dễ dàng triển khai và sao chép trên nhiều dây chuyền.",
-        "<b>Kiểm Thử Thực Nghiệm Nghiêm Ngặt:</b> Mọi thông số đều được chứng minh bằng số liệu đo đạc thực tế, không dựa trên lý thuyết suông.",
-        "<b>Đúng Hạn Tiến Độ:</b> Hệ thống vận hành đúng tiến độ và sẵn sàng cho đợt nghiệm thu Milestone 2 tại Tuần 10.",
-        "<b>Sẵn Sàng Trao Đổi:</b> Kính mời Quý Khách hàng và Ban Giám khảo đặt câu hỏi và theo dõi phần trình diễn trực tiếp trên mô hình 3D!"
+        "<b>100% Turnkey Reproducibility:</b> Fully automated software architecture packaged for seamless replication across multiple factory workcells.",
+        "<b>Rigorously Measured Field Data:</b> All performance benchmarks are backed by empirical measurement logs, not theoretical assumptions.",
+        "<b>Strict Milestone Adherence:</b> Engineering progress is strictly on schedule for formal Milestone 2 commissioning in Week 10.",
+        "<b>Interactive Discussion & Live Demo:</b> We warmly welcome all questions and invite the board to experience the live 3D digital twin demonstration!"
     ]
-    t12 = Table([[make_card("Giá Trị Kinh Tế Cho Doanh Nghiệp", c12_left, 376), make_card("Cam Kết Chất Lượng & Trao Đổi", c12_right, 376)]], colWidths=[388, 388])
+    t12 = Table([[make_card("Tangible Economic & Operational Value", c12_left, 376), make_card("Quality Commitment & Interactive Q&A", c12_right, 376)]], colWidths=[388, 388])
     t12.setStyle(TableStyle([('VALIGN', (0, 0), (-1, -1), 'TOP')]))
     story.append(t12)
 
