@@ -1,0 +1,125 @@
+TỔNG QUAN 12 SLIDE BẢN CLIENT & CÁCH THUYẾT TRÌNH
+
+---
+
+#### 🌟 Slide 01: Cover Slide — Lời Chào & Thông Điệp Cốt Lõi
+- **Tiêu đề tiếng Anh:** *Automated Conveyor Sorting System with UR10e & Smart Machine Vision*
+- **Ý nghĩa & Nội dung:** 
+  - Định vị dự án là một **giải pháp tự động hóa công nghiệp chuẩn 4.0**, sử dụng cánh tay robot Universal Robots UR10e kết hợp thị giác thông minh.
+  - Đưa ngay thông điệp kinh tế hấp dẫn nhất lên đầu: **Tăng 47% năng suất, chuyển động mượt mà liên tục, an toàn 100% không va chạm**.
+- **Cách nói với khách hàng:** *"Hôm nay nhóm mang đến cho quý doanh nghiệp một giải pháp phân loại hàng tự động giúp giải phóng sức lao động, tăng gần gấp đôi tốc độ xử lý hàng hóa và bảo đảm an toàn tuyệt đối cho thiết bị."*
+
+---
+
+#### 📋 Slide 02: Client Agenda — Lộ Trình Báo Cáo Rõ Ràng
+- **Tiêu đề tiếng Anh:** *Client Presentation Outline & Value Delivered*
+- **Ý nghĩa & Nội dung:** Chia bài nói làm 12 chặng, từ:
+  1. Thách thức cũ -> 2. Chuyển động mượt -> 3. Nhấc thoát hiểm -> 4. Kẹp tự định tâm -> 5. Xóa điểm mù -> 6. Trạm camera nghiêng -> 7. Minh chứng 25 lần chạy thực tế -> 8. Lộ trình bàn giao Milestone 2.
+- **Cách nói:** Cho khách hàng thấy buổi trình bày rất gọn gàng, đi thẳng vào các cải tiến thực tế đã được đo đạc bằng số liệu chứ không nói lý thuyết suông.
+
+---
+
+#### 🚀 Slide 03: Executive Progress Summary — Bước Nhảy Vọt Tuần 07
+- **Tiêu đề tiếng Anh:** *Quantum Leap in Performance & Robustness (Week 06 -> Week 07)*
+- **Ý nghĩa & Nội dung:** So sánh trực quan dạng "Trước đây (Before) vs. Bây giờ (After)":
+  - *Trước đây:* Robot dừng 10 lần mỗi chu kỳ (~25s), hàng trôi tới có nguy cơ đâm vào robot, camera trên trần bị cánh tay che mất, mỏ kẹp bị lệch.
+  - *Hiện tại:* Rút ngắn xuống **13.2 ~ 13.6s (tăng tốc 47%)**, chuyển động lượn sóng 0 điểm dừng, thoát hiểm trong **0.2 giây**, camera nghiêng 50° không điểm mù, mỏ kẹp ôm sát 100% vuông vắn.
+
+---
+
+#### 🌊 Slide 04: Smooth Fluid Motion — Chuyển Động Lượn Sóng Bảo Vệ Máy
+- **Tiêu đề tiếng Anh:** *Smooth Fluid Motion Architecture — Protecting Robot Lifespan*
+- **Kỹ thuật gốc:** Thay thế chuỗi điểm dừng gián đoạn bằng nội suy đường cong Cartesian Spline & Dynamic Orientation Blending.
+- **Giải thích cho khách hàng (Văn xuôi dễ hiểu):**
+  - **Nhược điểm cách làm cũ:** Robot di chuyển theo kiểu giật cục: *Đi một đoạn -> dừng -> kẹp -> dừng -> nhấc -> dừng...* Điều này làm động cơ liên tục thắng gấp rồi tăng ga, gây rung lắc mạnh cánh tay, nhanh mòn bạc đạn/hộp số và tốn điện.
+  - **Sáng kiến mới:** Toàn bộ quá trình từ lúc sà xuống gắp, nhấc lên, lượn qua vách ngăn, thả vào thùng được kết nối thành **một dải uốn lượn mượt mà như lướt sóng**.
+  - **Cân bằng cổ tay tự nhiên (Auto-Leveling):** Cổ tay robot tự xoay bù trừ để càng kẹp luôn chúc thẳng vuông góc với mặt đất, dây cáp không bao giờ bị vặn xoắn và không bao giờ va vào vách mica bảo vệ.
+
+---
+
+#### ⚡ Slide 05: Rapid Escape Lift — Cơ Chế Thoát Hiểm Chớp Nhoáng (0.2s)
+- **Tiêu đề tiếng Anh:** *Rapid Escape Lift (0.2s) & Factory Flow Acceleration*
+- **Kỹ thuật gốc:** Phân tách Cartesian Waypoint Lift với tỷ lệ tăng tốc x2.4 độc lập trước khi kích hoạt trajectory MoveIt.
+- **Giải thích cho khách hàng:**
+  - Băng chuyền nhà máy luôn chạy liên tục (0.3 m/s), các kiện hàng cứ nối đuôi nhau trôi tới. Nếu robot gắp xong mà nằm ỳ trên mặt băng để "suy nghĩ đường đi", kiện hàng sau chắc chắn sẽ lao tới đâm sầm vào!
+  - **Giải pháp:** Vừa kẹp chặt hộp xong, robot lập tức kích hoạt nhịp **nhấc bốc bổng thẳng đứng +16 cm chỉ trong < 0.25 giây**.
+  - Kiện hàng lập tức bay lên không trung an toàn. Mọi việc xoay chuyển sau đó diễn ra ở trên cao, dòng hàng trên băng chuyền bên dưới vẫn thoải mái trôi qua mà không bị ách tắc.
+
+---
+
+#### 🎯 Slide 06: Precision Grasp & Operator HUD — Kẹp Chuẩn Xác & Giám Sát 1-Chạm
+- **Tiêu đề tiếng Anh:** *Self-Centering Snap Grasp & 3-Angle Operator Supervisory HUD*
+- **Kỹ thuật gốc:** Active Rigidbody Velocity Reset & Local Snap Constraints + Preset Camera Matrix.
+- **Giải thích cho khách hàng:**
+  - **Phanh điện tử:** Khi kiện hàng chạm vạch, hệ thống ngắt quán tính lập tức, triệt tiêu độ trượt 4 - 6 cm. Hộp đứng im đúng tâm X = 0.00 m.
+  - **Càng kẹp tự định tâm:** Khi 2 má kẹp khép lại, chúng tự động ép phẳng và nắn hộp vuông vức 100% giữa 2 ngón kẹp, chấm dứt hoàn toàn tình trạng kẹp chéo hay vật thể bay lơ lửng ngoài mỏ.
+  - **Bàn điều khiển góc quay 1-chạm:** Người vận hành hoặc quản đốc chỉ cần bấm phím [1] (Toàn cảnh), [2] (Vùng phân loại), [3] (Cận cảnh mỏ kẹp), hoặc bấm phím [C] để mở thanh công cụ camera trên màn hình cảm ứng.
+
+---
+
+#### 👁️ Slide 07: Overcoming Blind Spots — Xóa Bỏ Điểm Mù Cánh Tay
+- **Tiêu đề tiếng Anh:** *Eliminating Robotic Arm Blind Spots in Machine Vision*
+- **Ý nghĩa & Bài toán thực tế:**
+  - Thiết kế truyền thống hay đặt camera vuông góc trên nóc nhìn xuống. Khi cánh tay robot vươn ra gắp hàng, **thân kim loại của robot che mất kiện hàng**, bóng đổ của cánh tay làm camera bị chói/tối, nhận diện sai màu hoặc làm mất dấu đúng lúc chuẩn bị kẹp!
+  - **Giải pháp bố trí đối xứng:** Đưa camera sang phía bờ đối diện của băng chuyền, chiếu nghiêng 50° vào trạm gắp. Robot đứng phía sau băng tải, camera nhìn từ phía trước -> **Cánh tay luôn ở phía sau vật thể, mặt trước và mặt trên của kiện hàng luôn lộ rõ 100% trước ống kính**.
+
+---
+
+#### 🏗️ Slide 08: Smart Camera Stand — Trạm Thị Giác Công Nghiệp Nghiêng 50°
+- **Tiêu đề tiếng Anh:** *Dedicated Tilted Inspection Station Design*
+- **Ý nghĩa kỹ thuật & vận hành:**
+  - **Thiết kế vững chãi:** Cột thép công nghiệp gắn sàn, cao 75 cm, cự ly cách băng tải 50 cm, hoàn toàn nằm ngoài tầm với vung tay của robot (không bao giờ sợ va quẹt).
+  - **Nhìn thấy cùng lúc 2 bề mặt:** Khác với camera nhìn từ trên xuống chỉ thấy nắp hộp, góc nghiêng 50° cho phép camera nhìn thấy cả **nắp trên và mặt trước** của hộp -> diện tích nhận diện màu sắc tăng gấp đôi, độ chính xác tăng gấp 2 lần.
+  - **Màn hình phụ PiP (Picture-in-Picture):** Người quản lý có thể bấm phím [V] để xem trực tiếp khung hình camera ở góc màn hình theo thời gian thực.
+
+---
+
+#### 🎨 Slide 09: Smart Perception — Tự Động Nhận Diện Màu & Định Vị Từng Milimet
+- **Tiêu đề tiếng Anh:** *Automated Color Recognition & Millimeter Centroid Localization*
+- **Kỹ thuật gốc:** HSV Color Space Thresholding + Morphological Noise Reduction + 15 FPS ROS Telemetry.
+- **Giải thích cho khách hàng:**
+  - Sử dụng hệ màu công nghiệp không phụ thuộc độ sáng: Dù ánh nắng ngoài trời đổi hướng hay có người đi ngang qua tạo bóng râm, máy vẫn nhận diện chính xác 100% ba dòng sản phẩm: **Đỏ**, **Vàng**, và **Xanh**.
+  - Tự động tính toán trọng tâm kiện hàng với độ chính xác **< 1.5 mm**, gửi tọa độ sang bộ điều khiển 15 lần mỗi giây. Toàn bộ dây chuyền hoạt động khép kín hoàn toàn mà không cần công nhân can thiệp.
+
+---
+
+#### 📊 Slide 10: Empirical Benchmarks — Minh Chứng 25 Lần Chạy Thực Tế
+- **Tiêu đề tiếng Anh:** *Empirical 25-Trial Continuous Run Verification*
+- **Nội dung:** Đây là **"Slide Bằng Chứng Vàng"** thuyết phục khách hàng nhất:
+  - Bảng số liệu đối đầu: Chu kỳ giảm từ 25 s -> 13.3 s (-47%), 25/25 lần gắp thành công (100%), 25/25 lần phân loại đúng thùng (100%), 0 lần va quẹt trên băng tải.
+  - **Hình ảnh biểu đồ thực tế:** Nhúng trực tiếp biểu đồ đo đạc thời gian chu kỳ cho thấy độ ổn định cực cao (độ lệch chuẩn chỉ 2.76 s).
+
+---
+
+#### 🗺️ Slide 11: Forward Roadmap — Lộ Trình Triển Khai Đến Tuần 10
+- **Tiêu đề tiếng Anh:** *Upcoming Sprint (Week 08) & Milestone 2 Handover (Week 10)*
+- **Ý nghĩa & Cam kết tiến độ:**
+  - **Tuần 08 (Tuần tới):** Chạy thử tải nặng 50 kiện hàng liên tục, tăng tốc độ băng chuyền lên 0.4 m/s và kiểm thử thị giác trong điều kiện ánh sáng khắc nghiệt.
+  - **Tuần 09:** Hoàn thiện sổ tay hướng dẫn sử dụng (Runbook), đóng gói công cụ chạy 1-chạm và video clip chứng minh.
+  - **Tuần 10 (Nghiệm thu Milestone 2):** Bàn giao và bảo vệ toàn diện hệ thống: Băng tải + Phân loại màu + Thị giác thông minh + Né vật cản tĩnh.
+  - **Tuần 11 – 14 (Milestone 3):** Nâng cấp thêm tính năng né vật cản động di chuyển bất ngờ.
+
+---
+
+#### 💰 Slide 12: Business Value & Q&A — Tổng Kết ROI & Mời Xem Trình Diễn
+- **Tiêu đề tiếng Anh:** *Return on Investment (ROI) & Interactive Demonstration*
+- **Ý nghĩa kết bài:**
+  - **Hoàn vốn nhanh (ROI):** Tốc độ gấp đôi giúp tiết kiệm chi phí nhân công, tăng số lượng kiện hàng xử lý được trong mỗi ca làm việc.
+  - **Giảm chi phí sửa chữa:** Chuyển động lượn sóng êm ái giúp tăng tuổi thọ động cơ và hộp số robot UR10e thêm 30 - 40%.
+  - **An toàn tuyệt đối:** Vách chắn mica kết hợp nhấc bổng 0.2s loại trừ rủi ro hư hỏng hàng hóa và máy móc.
+  - **Lời mời chốt:** Kính mời khách hàng đặt câu hỏi và theo dõi phần **trình diễn trực tiếp trên mô hình mô phỏng 3D Digital Twin**!
+
+---
+
+### TÓM TẮT SỰ KHÁC BIỆT CHÍNH GIỮA 2 BẢN SLIDE
+
+| Yếu tố | Bản Kỹ thuật (slides.md) | Bản Khách hàng (slides_client.md) |
+| :--- | :--- | :--- |
+| **Đối tượng** | Giảng viên, Kỹ sư Robot, Hội đồng Khoa học | Quý Khách hàng, Giám đốc Nhà máy, Ban Quản lý |
+| **Ngôn ngữ** | Tiếng Anh kỹ thuật chuyên sâu (Technical English) | Tiếng Anh kinh doanh trực quan (Business English) |
+| **Công thức toán** | Có đầy đủ (qz(Δθ), radians, HSV matrix) | Lược bỏ công thức, thay bằng văn xuôi & lợi ích thực tế |
+| **Trọng tâm trình bày** | Thuật toán, kiến trúc ROS/MoveIt, OMPL, Kinematics | Năng suất (+47%), Độ bền máy, An toàn 0 va chạm, ROI |
+
+Các file trình chiếu đã sẵn sàng tại:
+- File PPTX Client: docs/week07/UC8_Week07_Presentation_Client.pptx
+- File PDF Client: docs/week07/UC8_Week07_Presentation_Client.pdf
